@@ -1,0 +1,696 @@
+/* ============================================================
+   ESCOM — Sistema de Registro de Alumnos de Nuevo Ingreso
+   Estilos Globales
+   U.A. Tecnologías para el Desarrollo de Aplicaciones Web
+   ============================================================ */
+
+/* ---------- Variables de color institucional ---------- */
+:root {
+    /* Paleta principal — Manual de Diseño Web IPN 2025-26 */
+    --ipn-guinda: #750946;
+    /* Principal IPN (#750946 R117 G9 B70)  */
+    --ipn-guinda-dk: #5b1237;
+    /* Oscuro secundario (#5b1237 R91 G18 B55) */
+    --ipn-guinda-lt: #721e45;
+    /* Claro secundario (#721e45 R114 G30 B69) */
+    --ipn-gris: #636569;
+    /* Gris institucional (#636569 R99 G101 B105) */
+    /* Paleta secundaria de apoyo */
+    --ipn-gold: #ddc9a3;
+    /* Neutro cálido secundario (#ddc9a3) */
+    --ipn-gold-lt: #f7f0f3;
+    /* Fondo claro suave (#f7f0f3) */
+    --escom-blue: #343254;
+    /* Azul marino (#343254 R52 G50 B84) */
+    --escom-blue-lt: #8a98c7;
+    /* Azul claro (#8a98c7 R138 G152 B199) */
+    --neutral-light: #f5f5f5;
+    --neutral-mid: #e0e0e0;
+    --text-dark: #000000;
+    --text-mid: #636569;
+    --white: #ffffff;
+    --shadow-card: 0 4px 18px rgba(0, 0, 0, 0.10);
+    --transition: all 0.3s ease;
+}
+
+/* ---------- Reset y base ---------- */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Noto Sans', 'Georgia', sans-serif;
+    background-color: var(--neutral-light);
+    color: var(--text-dark);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Montserrat',sans-serif;
+    color: var(--ipn-guinda);
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* ============================================================
+   NAVBAR
+   ============================================================ */
+.navbar-institucional {
+    background-color: var(--ipn-guinda-dk);
+    border-bottom: 3px solid var(--ipn-gold);
+    padding: 0;
+}
+
+/* Banda superior institucional */
+.navbar-banda-superior {
+    background-color: var(--ipn-guinda);
+    padding: 6px 0;
+    border-bottom: 1px solid var(--ipn-guinda-lt);
+}
+
+.navbar-banda-superior .text-institucional {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.72rem;
+    color: var(--ipn-gold-lt);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+/* Bloque de logos */
+.navbar-logos-block {
+    background-color: var(--ipn-guinda-dk);
+    padding: 10px 20px;
+}
+
+.navbar-logo-img {
+    height: 54px;
+    width: auto;
+    object-fit: contain;
+    filter: brightness(1.1);
+    transition: var(--transition);
+}
+
+.navbar-logo-img:hover {
+    filter: brightness(1.3);
+}
+
+.navbar-logo-divider {
+    width: 1px;
+    height: 44px;
+    background-color: var(--ipn-gold);
+    opacity: 0.5;
+    margin: 0 14px;
+}
+
+.navbar-titulo {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.25;
+}
+
+.navbar-subtitulo {
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 0.75rem;
+    color: var(--ipn-gold-lt);
+    letter-spacing: 0.04em;
+}
+
+/* Barra de navegación */
+.navbar-nav-bar {
+    background-color: var(--escom-blue);
+    border-top: 2px solid var(--ipn-gold);
+}
+
+.navbar-nav-bar .nav-link {
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--white) !important;
+    padding: 12px 22px !important;
+    letter-spacing: 0.03em;
+    text-transform: capitalize;
+    transition: var(--transition);
+    position: relative;
+}
+
+.navbar-nav-bar .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 3px;
+    background-color: var(--ipn-gold);
+    transition: var(--transition);
+}
+
+.navbar-nav-bar .nav-link:hover::after,
+.navbar-nav-bar .nav-link.active::after {
+    width: 80%;
+}
+
+.navbar-nav-bar .nav-link:hover,
+.navbar-nav-bar .nav-link.active {
+    background-color: rgba(255, 255, 255, 0.08);
+    color: var(--ipn-gold-lt) !important;
+}
+
+.navbar-toggler {
+    border-color: var(--ipn-gold) !important;
+}
+
+.navbar-toggler-icon {
+    filter: invert(1);
+}
+
+/* ============================================================
+HERO SLIDER / CAROUSEL
+============================================================ */
+#carouselEscom {
+    border-bottom: 4px solid var(--ipn-gold);
+        position: relative;
+
+}
+
+.carousel-inner {
+    position: relative;
+    z-index: 1;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    z-index: 99999;
+}
+
+.carousel-item {
+    position: relative;
+    height: 480px;
+    overflow: hidden;
+}
+
+.carousel-item img {
+    width: 100%;
+    height: 480px;
+    object-fit: cover;
+    filter: brightness(0.75) saturate(0.6);
+}
+
+/* Overlay institucional ligero — manual IPN: imágenes de bajo contraste */
+.carousel-item::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg,
+            rgba(117, 9, 70, 0.30) 0%,
+            rgba(52, 50, 84, 0.22) 100%);
+    z-index: 1;
+    pointer-events: none;
+    /* <-- el overlay ya no bloquea los clics */
+}
+
+.carousel-caption {
+    z-index: 3;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 40px 80px;
+    text-align: left;
+}
+
+/* Ya no usamos pointer-events */
+
+.carousel-caption .badge-categoria {
+    display: inline-block;
+    background-color: var(--ipn-gold);
+    color: var(--ipn-guinda-dk);
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 0.70rem;
+    font-weight: 700;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    padding: 4px 14px;
+    margin-bottom: 14px;
+    border-radius: 2px;
+}
+
+.carousel-caption h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--white);
+    line-height: 1.2;
+    max-width: 640px;
+    margin-bottom: 12px;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.carousel-caption p {
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.88);
+    max-width: 520px;
+    line-height: 1.6;
+    margin-bottom: 22px;
+}
+
+.carousel-caption .btn-slider {
+    position: relative;
+    z-index: 4;
+    display: inline-block;
+    background-color: var(--ipn-guinda);
+    color: var(--white);
+    font-family: 'Noto Sans', sans-serif;
+    font-weight: 700;
+    font-size: 0.82rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 10px 28px;
+    border: 2px solid var(--white);
+    border-radius: 2px;
+    cursor: pointer;
+    transition: var(--transition);
+    text-decoration: none;
+}
+
+.carousel-caption .btn-slider:hover {
+    background-color: var(--white);
+    color: var(--ipn-guinda);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    width: 8%;
+    opacity: 0.9;
+    z-index: 9999;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    width: 3rem;
+    height: 3rem;
+}
+
+.carousel-indicators {
+    z-index: 9999  ; /* por encima del caption */
+}
+
+.carousel-indicators [data-bs-target] {
+    width: 30px;
+    height: 3px;
+    background-color: var(--white);
+    border-radius: 0;
+    opacity: 0.5;
+    border: none;
+}
+
+.carousel-indicators .active {
+    opacity: 1;
+    background-color: var(--ipn-gold);
+}
+
+/* ============================================================
+   SECCIÓN DE BIENVENIDA (bajo el slider)
+   ============================================================ */
+.seccion-bienvenida {
+    background-color: var(--white);
+    border-bottom: 3px solid var(--neutral-mid);
+    padding: 60px 0;
+}
+
+.bienvenida-linea-decorativa {
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--ipn-guinda), var(--ipn-gold));
+    margin: 0 auto 20px;
+    border-radius: 2px;
+}
+
+.bienvenida-titulo {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.85rem;
+    color: var(--ipn-guinda);
+    margin-bottom: 16px;
+}
+
+.bienvenida-texto {
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 1rem;
+    color: var(--text-mid);
+    line-height: 1.75;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+/* Tarjetas de acceso rápido */
+.card-acceso {
+    border: none;
+    border-top: 4px solid var(--ipn-guinda);
+    border-radius: 4px;
+    background-color: var(--white);
+    box-shadow: var(--shadow-card);
+    transition: var(--transition);
+    text-align: center;
+    padding: 30px 20px;
+    height: 100%;
+}
+
+.card-acceso:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.18);
+    border-top-color: var(--ipn-gold);
+}
+
+.card-acceso .icono-acceso {
+    font-size: 2.2rem;
+    color: var(--ipn-guinda);
+    margin-bottom: 14px;
+    display: block;
+}
+
+.card-acceso h5 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.1rem;
+    color: var(--ipn-guinda);
+    margin-bottom: 10px;
+}
+
+.card-acceso p {
+    font-size: 0.88rem;
+    color: var(--text-mid);
+    line-height: 1.6;
+    margin-bottom: 18px;
+}
+
+.btn-card-acceso {
+    background-color: var(--ipn-guinda);
+    color: var(--white);
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 0.80rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 8px 20px;
+    border: none;
+    border-radius: 2px;
+    transition: var(--transition);
+    display: inline-block;
+}
+
+.btn-card-acceso:hover {
+    background-color: var(--escom-blue);
+    color: var(--white);
+}
+
+/* ============================================================
+   SECCIÓN DE AVISOS / CONVOCATORIA
+   ============================================================ */
+.seccion-avisos {
+    background-color: var(--neutral-light);
+    padding: 60px 0;
+}
+
+.seccion-avisos .aviso-card {
+    background-color: var(--white);
+    border-left: 5px solid var(--ipn-guinda);
+    border-radius: 2px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.07);
+    transition: var(--transition);
+}
+
+.seccion-avisos .aviso-card:hover {
+    border-left-color: var(--ipn-gold);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+.aviso-fecha {
+    font-size: 0.75rem;
+    color: var(--ipn-gold);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+}
+
+.aviso-titulo {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    color: var(--ipn-guinda);
+    margin-bottom: 6px;
+}
+
+.aviso-desc {
+    font-size: 0.875rem;
+    color: var(--text-mid);
+    line-height: 1.55;
+    margin: 0;
+}
+
+/* Título de sección */
+.titulo-seccion {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.7rem;
+    color: var(--ipn-guinda);
+    margin-bottom: 8px;
+}
+
+.subtitulo-seccion {
+    font-size: 0.9rem;
+    color: var(--text-mid);
+    margin-bottom: 36px;
+}
+
+.linea-seccion {
+    width: 50px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--ipn-guinda), var(--ipn-gold));
+    margin-bottom: 10px;
+    border-radius: 2px;
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer.footer-institucional {
+    background-color: var(--ipn-guinda-dk);
+    border-top: 3px solid var(--ipn-gold);
+    color: rgba(255, 255, 255, 0.80);
+    padding: 48px 0 0;
+    margin-top: auto;
+}
+
+.footer-logo-img {
+    height: 48px;
+    object-fit: contain;
+    filter: brightness(1.2) grayscale(0.2);
+    margin-bottom: 12px;
+}
+
+.footer-titulo-col {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.95rem;
+    color: var(--ipn-gold-lt);
+    margin-bottom: 14px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.footer-texto {
+    font-size: 0.82rem;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.70);
+}
+
+.footer-link-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-link-list li {
+    margin-bottom: 8px;
+}
+
+.footer-link-list a {
+    font-size: 0.82rem;
+    color: rgba(255, 255, 255, 0.70);
+    transition: var(--transition);
+}
+
+.footer-link-list a:hover {
+    color: var(--ipn-gold-lt);
+    padding-left: 4px;
+}
+
+.footer-divider {
+    border-color: rgba(255, 255, 255, 0.12);
+    margin: 36px 0 0;
+}
+
+.footer-copy {
+    background-color: var(--ipn-guinda);
+    padding: 14px 0;
+    font-size: 0.78rem;
+    color: rgba(255, 255, 255, 0.55);
+    text-align: center;
+}
+
+.footer-copy span {
+    color: var(--ipn-gold-lt);
+}
+
+/* ============================================================
+   BOTONES GLOBALES
+   ============================================================ */
+.btn-institucional {
+    background-color: var(--ipn-guinda);
+    color: var(--white);
+    font-family: 'Noto Sans', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 10px 28px;
+    border: 2px solid var(--ipn-guinda);
+    border-radius: 2px;
+    transition: var(--transition);
+}
+
+.btn-institucional:hover {
+    background-color: transparent;
+    color: var(--ipn-guinda);
+}
+
+.btn-institucional-outline {
+    background-color: transparent;
+    color: var(--ipn-guinda);
+    font-family: 'Noto Sans', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 10px 28px;
+    border: 2px solid var(--ipn-guinda);
+    border-radius: 2px;
+    transition: var(--transition);
+}
+
+.btn-institucional-outline:hover {
+    background-color: var(--ipn-guinda);
+    color: var(--white);
+}
+
+/* ============================================================
+   UTILIDADES
+   ============================================================ */
+.text-guinda {
+    color: var(--ipn-guinda) !important;
+}
+
+.text-gold {
+    color: var(--ipn-gold) !important;
+}
+
+.text-escom {
+    color: var(--escom-blue) !important;
+}
+
+.bg-guinda {
+    background-color: var(--ipn-guinda) !important;
+}
+
+.bg-escom {
+    background-color: var(--escom-blue) !important;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 768px) {
+
+    .carousel-item,
+    .carousel-item img {
+        height: 320px;
+    }
+
+    .carousel-caption {
+        padding: 24px 30px;
+    }
+
+    .carousel-caption h2 {
+        font-size: 1.45rem;
+    }
+
+    .carousel-caption p {
+        font-size: 0.85rem;
+    }
+
+    .navbar-titulo {
+        font-size: 0.85rem;
+    }
+
+    .navbar-logo-img {
+        height: 40px;
+    }
+
+    .bienvenida-titulo {
+        font-size: 1.4rem;
+    }
+}
+
+@media (max-width: 576px) {
+
+    .carousel-item,
+    .carousel-item img {
+        height: 260px;
+    }
+
+    .carousel-caption h2 {
+        font-size: 1.2rem;
+    }
+
+    .carousel-caption .badge-categoria,
+    .carousel-caption p {
+        display: none;
+    }
+
+    .navbar-banda-superior .text-institucional {
+        font-size: 0.62rem;
+    }
+}
