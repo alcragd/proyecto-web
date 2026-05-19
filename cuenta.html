@@ -54,12 +54,12 @@
 
                     <!-- Logos institucionales (izquierda) -->
                     <div class="d-flex align-items-center gap-2">
-                        <a href="index.html" aria-label="Inicio IPN">
+                        <a href="https://www.ipn.mx" target="_blank" aria-label="Inicio IPN">
                             <img src="docs/img/logo-ipn-blanco.png" alt="Logotipo del Instituto Politécnico Nacional"
                                 class="navbar-logo-img" />
                         </a>
                         <div class="navbar-logo-divider d-none d-sm-block"></div>
-                        <a href="index.html" aria-label="Inicio ESCOM">
+                        <a href="https://www.escom.ipn.mx" target="_blank" aria-label="Inicio ESCOM">
                             <img src="docs/img/logoEscom.png" alt="Logotipo de la Escuela Superior de Cómputo"
                                 class="navbar-logo-img" />
                         </a>
@@ -128,9 +128,33 @@
        CONTENIDO PRINCIPAL
        ====================================================== -->
     <main>
-
-        
-
+        <div class="container-sm my-5">
+            <div class="mb-4">
+                <h2>Ingresa tus credenciales</h2>
+            </div>
+            <form autocomplete="off">
+                <div class="input-group mb-3">
+                    <span class="input-group-text">@</span>
+                    <div class="form-floating">
+                        <input type="email" class="form-control" id="admin-correo" placeholder="Correo" required>
+                        <label for="admin-correo">Correo</label>
+                    </div>
+                </div>
+                <div class="input-group mb-4">
+                    <span class="input-group-text">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lock-fill" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M8 0a4 4 0 0 1 4 4v2.05a2.5 2.5 0 0 1 2 2.45v5a2.5 2.5 0 0 1-2.5 2.5h-7A2.5 2.5 0 0 1 2 13.5v-5a2.5 2.5 0 0 1 2-2.45V4a4 4 0 0 1 4-4m0 1a3 3 0 0 0-3 3v2h6V4a3 3 0 0 0-3-3"/>
+                        </svg>
+                    </span>
+                    <div class="form-floating">
+                        <input type="password" class="form-control" id="admin-passwd" placeholder="Contraseña" required>
+                        <label for="admin-passwd">Contraseña</label>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-ipn">Entrar</button>
+            </form>
+        </div>
     </main>
     <!-- /MAIN -->
 
@@ -145,8 +169,12 @@
                 <!-- Columna: logos e información general -->
                 <div class="col-12 col-md-4">
                     <div class="d-flex align-items-center gap-3 mb-3">
-                        <img src="docs/img/logo-ipn-blanco.png" alt="IPN" class="footer-logo-img" />
-                        <img src="docs/img/logoEscom.png" alt="ESCOM" class="footer-logo-img" />
+                        <a href="https://www.ipn.mx/" target="_blank" aria-label="Inicio IPN">
+                            <img src="docs/img/logo-ipn-blanco.png" alt="IPN" class="footer-logo-img" />
+                        </a>
+                        <a href="https://www.escom.ipn.mx/" target="_blank" aria-label="Inicio ESCOM">
+                            <img src="docs/img/logoEscom.png" alt="ESCOM" class="footer-logo-img" />
+                        </a>
                     </div>
                     <p class="footer-texto">
                         Escuela Superior de Cómputo<br />
