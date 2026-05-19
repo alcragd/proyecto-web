@@ -250,7 +250,6 @@ HERO SLIDER / CAROUSEL
     text-align: left;
 }
 
-/* Ya no usamos pointer-events */
 
 .carousel-caption .badge-categoria {
     display: inline-block;
@@ -502,6 +501,17 @@ HERO SLIDER / CAROUSEL
     background: linear-gradient(90deg, var(--ipn-guinda), var(--ipn-gold));
     margin-bottom: 10px;
     border-radius: 2px;
+}
+
+.btn-ipn{
+    background-color: #fff;
+    color: var(--ipn-guinda);
+    border: 1px solid var(--ipn-guinda);
+}
+
+.btn-ipn:hover{
+    background-color: var(--ipn-guinda);
+    color: #fff;
 }
 
 /* ============================================================
