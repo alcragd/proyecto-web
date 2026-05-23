@@ -85,12 +85,12 @@
                         <div class="collapse navbar-collapse" id="menuPrincipal">
                             <ul class="navbar-nav ms-auto">
                                 <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href="index.html">
+                                    <a class="nav-link"  href="index.html">
                                         <i class="bi bi-house-door me-1"></i>Inicio
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="registro.html">
+                                    <a class="nav-link active" aria-current="page" href="registro.html">
                                         <i class="bi bi-person-plus me-1"></i>Registro
                                     </a>
                                 </li>
@@ -113,10 +113,182 @@
         </nav>
     </header>
 
+    <main class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-xl-10">
+            
+            <div class="text-center mb-5">
+                <h2 class="fw-bold text-guinda">Formulario de Registro</h2>
+                <p class="text-muted">Proceso de recopilación de datos generales para alumnos de nuevo ingreso a la ESCOM.</p>
+                <div style="width: 80px; height: 4px; background-color: var(--ipn-gold); margin: 0 auto;" class="rounded"></div>
+            </div>
 
+            <form id="formRegistro" action="#" method="POST">
+                
+                <div class="card mb-4 shadow-sm border-0" style="border-top: 4px solid var(--ipn-guinda) !important;">
+                    <div class="card-header bg-white py-3">
+                        <h4 class="mb-0 text-guinda fw-bold"><i class="bi bi-person-vcard me-2"></i>Datos Personales</h4>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="row g-3">
+                            <div class="col-12 col-md-4">
+                                <label for="boleta" class="form-label fw-semibold">No. de Boleta</label>
+                                <input type="text" class="form-control" id="boleta" name="boleta" required placeholder="Ej: 2026630000">
+                            </div>
+                            <div class="col-12 col-md-8">
+                                <label for="nombre" class="form-label fw-semibold">Nombre Completo</label>
+                                <input type="text" class="form-control" id="nombre" name="nombre" required placeholder="Apellido Paterno Materno Nombres">
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <label for="fechaNacimiento" class="form-label fw-semibold">Fecha de Nacimiento</label>
+                                <input type="date" class="form-control" id="fechaNacimiento" name="fechaNacimiento" required>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <label for="genero" class="form-label fw-semibold">Género</label>
+                                <select class="form-select" id="genero" name="genero" required>
+                                    <option value="" selected disabled>Selecciona una opción...</option>
+                                    <option value="Mujer">Mujer</option>
+                                    <option value="Hombre">Hombre</option>
+                                    <option value="Otro">Otro</option>
+                                </select>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <label for="curp" class="form-label fw-semibold">CURP</label>
+                                <input type="text" class="form-control" id="curp" name="curp" required placeholder="18 caracteres" style="text-transform: uppercase;">
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <label for="entidadFederativa" class="form-label fw-semibold">Entidad Federativa de Procedencia</label>
+                                <select class="form-select" id="entidadFederativa" name="entidadFederativa" required>
+                                    <option value="" selected disabled>Selecciona un estado...</option>
+                                    <option value="Aguascalientes">Aguascalientes</option>
+                                    <option value="Baja California">Baja California</option>
+                                    <option value="Baja California Sur">Baja California Sur</option>
+                                    <option value="Campeche">Campeche</option>
+                                    <option value="Chiapas">Chiapas</option>
+                                    <option value="Chihuahua">Chihuahua</option>
+                                    <option value="Ciudad de México">Ciudad de México</option>
+                                    <option value="Coahuila">Coahuila</option>
+                                    <option value="Colima">Colima</option>
+                                    <option value="Durango">Durango</option>
+                                    <option value="Estado de México">Estado de México</option>
+                                    <option value="Guanajuato">Guanajuato</option>
+                                    <option value="Guerrero">Guerrero</option>
+                                    <option value="Hidalgo">Hidalgo</option>
+                                    <option value="Jalisco">Jalisco</option>
+                                    <option value="Michoacán">Michoacán</option>
+                                    <option value="Morelos">Morelos</option>
+                                    <option value="Nayarit">Nayarit</option>
+                                    <option value="Nuevo León">Nuevo León</option>
+                                    <option value="Oaxaca">Oaxaca</option>
+                                    <option value="Puebla">Puebla</option>
+                                    <option value="Querétaro">Querétaro</option>
+                                    <option value="Quintana Roo">Quintana Roo</option>
+                                    <option value="San Luis Potosí">San Luis Potosí</option>
+                                    <option value="Sinaloa">Sinaloa</option>
+                                    <option value="Sonora">Sonora</option>
+                                    <option value="Tabasco">Tabasco</option>
+                                    <option value="Tamaulipas">Tamaulipas</option>
+                                    <option value="Tlaxcala">Tlaxcala</option>
+                                    <option value="Veracruz">Veracruz</option>
+                                    <option value="Yucatán">Yucatán</option>
+                                    <option value="Zacatecas">Zacatecas</option>
+                                </select>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <label for="telefono" class="form-label fw-semibold">Teléfono</label>
+                                <input type="tel" class="form-control" id="telefono" name="telefono" required placeholder="10 dígitos">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mb-4 shadow-sm border-0" style="border-top: 4px solid var(--escom-blue) !important;">
+                    <div class="card-header bg-white py-3">
+                        <h4 class="mb-0 text-escom fw-bold"><i class="bi bi-mortarboard me-2"></i>Datos de Procedencia</h4>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="row g-3">
+                            <div class="col-12 col-md-6">
+                                <label for="escuelaProcedencia" class="form-label fw-semibold">Escuela de Procedencia</label>
+                                <select class="form-select" id="escuelaProcedencia" name="escuelaProcedencia" required>
+                                    <option value="" selected disabled>Selecciona una opción...</option>
+                                    <option value="CECyT 1">CECyT 1 "Gonzalo Vázquez Vela"</option>
+                                    <option value="CECyT 2">CECyT 2 "Miguel Bernard"</option>
+                                    <option value="CECyT 3">CECyT 3 "Estanislao Ramírez Ruiz"</option>
+                                    <option value="CECyT 4">CECyT 4 "Lázaro Cárdenas"</option>
+                                    <option value="CECyT 5">CECyT 5 "Benito Juárez"</option>
+                                    <option value="CECyT 6">CECyT 6 "Miguel Othón de Mendizábal"</option>
+                                    <option value="CECyT 7">CECyT 7 "Cuauhtémoc"</option>
+                                    <option value="CECyT 8">CECyT 8 "Narciso Bassols"</option>
+                                    <option value="CECyT 9">CECyT 9 "Juan de Dios Bátiz"</option>
+                                    <option value="CECyT 10">CECyT 10 "Carlos Vallejo Márquez"</option>
+                                    <option value="CECyT 11">CECyT 11 "Wilfrido Massieu"</option>
+                                    <option value="CECyT 12">CECyT 12 "José María Morelos"</option>
+                                    <option value="CECyT 13">CECyT 13 "Ricardo Flores Magón"</option>
+                                    <option value="CECyT 14">CECyT 14 "Luis Enrique Erro"</option>
+                                    <option value="CECyT 15">CECyT 15 "Diódoro Antúnez Echegaray"</option>
+                                    <option value="CECyT 16">CECyT 16 "Hidalgo"</option>
+                                    <option value="CECyT 17">CECyT 17 "León, Guanajuato"</option>
+                                    <option value="CECyT 18">CECyT 18 "Zacatecas"</option>
+                                    <option value="CECyT 19">CECyT 19 "Leona Vicario"</option>
+                                    <option value="CET 1">CET 1 "Walter Cross Buchanan"</option>
+                                    <option value="Otro">Otro (Especificar)</option>
+                                </select>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <label for="promedio" class="form-label fw-semibold">Promedio</label>
+                                <input type="number" class="form-control" id="promedio" name="promedio" required min="6.0" max="10.0" step="0.01" placeholder="Ej: 8.56">
+                            </div>
+                            <div class="col-12 col-md-12">
+                                <label for="nombreEscuela" class="form-label fw-semibold text-muted">Nombre de la escuela (Solo si seleccionaste "Otro")</label>
+                                <input type="text" class="form-control" id="nombreEscuela" name="nombreEscuela" disabled placeholder="Escribe el nombre de tu institución externa">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mb-5 shadow-sm border-0" style="border-top: 4px solid var(--ipn-guinda) !important;">
+                    <div class="card-header bg-white py-3">
+                        <h4 class="mb-0 text-guinda fw-bold"><i class="bi bi-shield-lock me-2"></i>Datos de Cuenta</h4>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="row g-3">
+                            <div class="col-12 col-md-6">
+                                <label for="correo" class="form-label fw-semibold">Correo Electrónico Institucional</label>
+                                <div class="input-group">
+                                    <input type="email" class="form-control" id="correo" name="correo" required placeholder="usuario">
+                                    <span class="input-group-text bg-light text-muted">@alumno.ipn.mx</span>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <label for="contrasena" class="form-label fw-semibold">Contraseña</label>
+                                <input type="password" class="form-control" id="contrasena" name="contrasena" required placeholder="Mínimo 6 caracteres">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-3 mb-5">
+                    <div class="col-12 col-sm-6">
+                        <button type="reset" class="btn btn-institucional-outline w-100 py-2 fw-bold text-uppercase">
+                            <i class="bi bi-trash3 me-2"></i>Limpiar Formulario
+                        </button>
+                    </div>
+                    <div class="col-12 col-sm-6">
+                        <button type="submit" class="btn btn-institucional w-100 py-2 fw-bold text-uppercase" style="background-color: var(--ipn-guinda); color: white;">
+                            <i class="bi bi-check-circle me-2"></i>Registrar Datos
+                        </button>
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</main>
 
     
-    <h1>REGISTRO.HTML</h1>
+   
      <footer class="footer-institucional" aria-label="Pie de página institucional">
         <div class="container">
             <div class="row g-4">
