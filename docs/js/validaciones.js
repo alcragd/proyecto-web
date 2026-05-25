@@ -20,7 +20,7 @@ function esMayuscula(l){
         if(l == acentos[i])
             return true;
 
-    else return false;
+    return false;
 }
 
 function esMinuscula(l){
@@ -37,7 +37,7 @@ function esMinuscula(l){
         if(l == acentos[i])
             return true;
 
-    else return false;
+    return false;
 }
 
 function esLetra(l){
@@ -185,9 +185,40 @@ function validarCorreo(){
     return cVal;
 }
 
+function validarCurp(){
+    let curp = $("#curp").val();
+    let cVal = true;
+
+    if(curp.length != 18)
+        cVal = false;
+    else{
+        for(let i = 0; i < 4; i++)
+            if(!esMayuscula(curp[i]))
+                cVal = false;
+
+        for(let i = 4; i < 10; i++)
+            if(!esNumero(curp[i]))
+                cVal = false;
+
+        if(curp[10] != 'H' && curp[10] != 'M')
+            cVal = false;
+
+        for(let i = 11; i < 16; i++)
+            if(!esMayuscula(curp[i]))
+                cVal = false;
+
+        if(!esMayuscula(curp[16]) && !esNumero(curp[16]))
+            cVal = false;
+
+        if(!esMayuscula(curp[17]) && !esNumero(curp[17]))
+            cVal = false;
+    }
+
+    return cVal;
+}
+
 $(document).ready(function(){
     $("#formRegistro").submit(function(e){
-
         if(!validarBoleta()){
             alert("Boleta inválida");
             e.preventDefault();
@@ -211,5 +242,13 @@ $(document).ready(function(){
             e.preventDefault();
             return;
         }
+
+        if(!validarCurp()){
+            alert("Curp inválido");
+            e.preventDefault();
+            return;
+        }
+
     });
-})
+
+});
