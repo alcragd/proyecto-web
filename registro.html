@@ -22,8 +22,7 @@
     <link rel="shortcut icon" href="docs/img/logoEquipo.png" type="image/x-icon">
     <link rel="stylesheet" href="docs/css/style.css" />
 
-    <script src="/docs/js/jquery-4.0.0.min.js"></script>
-    <script src="/docs/js/validaciones.js"></script>
+    
 </head>
 <body>
     <!-- Navegacion -->
@@ -259,8 +258,8 @@
                             <div class="col-12 col-md-6">
                                 <label for="correo" class="form-label fw-semibold">Correo Electrónico Institucional</label>
                                 <div class="input-group">
-                                    <input type="email" class="form-control" id="correo" name="correo" required placeholder="usuario">
-                                    <span class="input-group-text bg-light text-muted">@alumno.ipn.mx</span>
+                                    <input type="email" class="form-control" id="correo" name="correo" required placeholder="ejemplo@alumno.ipn.mx">
+                                    <!-- <span class="input-group-text bg-light text-muted">@alumno.ipn.mx</span> -->
                                 </div>
                             </div>
                             <div class="col-12 col-md-6">
@@ -378,34 +377,8 @@
             Sistema de Registro de Alumnos de Nuevo Ingreso.
         </div>
     </footer>
-    <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const escuelaSelect = document.getElementById('escuelaProcedencia');
-        const nombreEscuelaInput = document.getElementById('nombreEscuela');
-        const labelNombreEscuela = document.querySelector('label[for="nombreEscuela"]');
-
-        escuelaSelect.addEventListener('change', () => {
-            if (escuelaSelect.value === 'Otro') {
-                // Habilitar el campo y hacerlo obligatorio
-                nombreEscuelaInput.disabled = false;
-                nombreEscuelaInput.required = true;
-                
-                // Estilo visual para denotar que ya está activo
-                labelNombreEscuela.classList.remove('text-muted');
-            } else {
-                // Deshabilitar el campo y quitar la obligatoriedad
-                nombreEscuelaInput.disabled = true;
-                nombreEscuelaInput.required = false;
-                
-                // Limpiar el texto si el usuario había escrito algo antes de cambiar de opción
-                nombreEscuelaInput.value = '';
-                
-                // Regresar el estilo visual atenuado
-                labelNombreEscuela.classList.add('text-muted');
-            }
-        });
-    });
-</script>
+    <script src="docs/js/validaciones.js"></script>
+    <script src="docs/js/utility.js"></script>
     <script src="docs/js/jquery-4.0.0.min.js"></script>
     <script src="docs/js/registro.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>

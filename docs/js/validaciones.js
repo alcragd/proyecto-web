@@ -217,38 +217,16 @@ function validarCurp(){
     return cVal;
 }
 
-$(document).ready(function(){
-    $("#formRegistro").submit(function(e){
-        if(!validarBoleta()){
-            alert("Boleta inválida");
-            e.preventDefault();
-            return;
-        }
-       
-        if(!validarNombre()){
-            alert("Nombre inválido");
-            e.preventDefault();
-            return;
-        }
+function validarContra(){
+    if($('#contrasena').val().length<6) return false;
 
-        if(!validarTelefono()){
-            alert("Teléfono inválido");
-            e.preventDefault();
-            return;
-        }
+    return true;
+}
 
-        if(!validarCorreo()){
-            alert("Correo inválido");
-            e.preventDefault();
-            return;
-        }
+// $(document).ready(function(){
+//     $("#formRegistro").submit(function(e){
+        
 
-        if(!validarCurp()){
-            alert("Curp inválido");
-            e.preventDefault();
-            return;
-        }
+//     });
 
-    });
-
-});
+// });

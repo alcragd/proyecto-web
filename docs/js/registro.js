@@ -49,7 +49,41 @@ $(document).ready(function () {
 	});
 
 	$('#formRegistro').submit(function (evt) {
-		evt.preventDefault(); 
+
+		evt.preventDefault();
+	
+		if(!validarBoleta()){
+            alert("Boleta inválida");
+            return;
+        }
+
+
+       
+        if(!validarNombre()){
+            alert("Nombre inválido");
+            return;
+        }
+
+        if(!validarTelefono()){
+            alert("Teléfono inválido");
+            return;
+        }
+
+        if(!validarCorreo()){
+            alert("Correo inválido");
+            return;
+        }
+
+        if(!validarCurp()){
+            alert("Curp inválido");
+            return;
+        }
+
+		if(!validarContra()){
+            alert("Contraseña inválida");
+            return;
+        }
+
 		registro();
 	});
 
