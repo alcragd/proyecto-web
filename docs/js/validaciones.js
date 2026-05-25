@@ -1,24 +1,42 @@
 function esNumero(n){
     if(
-        a >= '0' && 
-        a <= '9'
+        n >= '0' && 
+        n <= '9'
     ) return true;
     else return false;
 }
 
 function esMayuscula(l){
+    let acentos = [
+        'Á','É','Í','Ó','Ú','Ñ'
+    ];
+
     if(
         l >= 'A' 
         && l <= 'Z'
     ) return true;
+
+    for(let i = 0; i < acentos.length; i++)
+        if(l == acentos[i])
+            return true;
+
     else return false;
 }
 
 function esMinuscula(l){
+    let acentos = [
+        'á','é','í','ó','ú','ñ'
+    ];
+
     if(
         l >= 'a' && 
         l <= 'z'
     ) return true;
+
+    for(let i = 0; i < acentos.length; i++)
+        if(l == acentos[i])
+            return true;
+
     else return false;
 }
 
@@ -48,21 +66,30 @@ function esImprimible(c){
 }
 
 function validarBoleta(){
-    let boleta = $(#boleta).val();
+    let boleta = $("#boleta").val();
     let bVal = true;
 
-    if(boleta.length() != 10)
+    if(boleta.length != 10)
         bVal = false;
-    else if(!esNumero(boleta[0]))
-        if(boleta[0] != 'P')
-            bVal = false;
-    else if(!esNumero(boleta[1]))
+    else 
+    if(!esNumero(boleta[0])){
         if(
-            boleta[1] != 'P' && 
-            boleta[1] != 'E'
+            boleta[0] != 'P' ||
+            (
+                boleta[1] != 'P' && 
+                boleta[1] != 'E'
+            )
         )
             bVal = false;
-    else
+
+        for(let i = 2; i < boleta.length; i++)
+            if(!esNumero(boleta[i])){
+                bVal = false;
+                break;
+            }
+    }
+        
+    else 
         for(let i = 0; i < boleta.length; i++)
             if(!esNumero(boleta[i])){
                 bVal = false;
@@ -73,8 +100,12 @@ function validarBoleta(){
 }
 
 function validarNombre(){
-    let nombre = $(#nombre).val();
+    let nombre = $("#nombre").val();
     let nVal = true;
+
+    if(nombre.trim().length == 0){
+        nVal = false;
+    }
 
     for(let i = 0; i < nombre.length; i++){
         if(
@@ -90,14 +121,14 @@ function validarNombre(){
 }
 
 function validarTelefono(){
-    let telefono = $(#telefono).val();
+    let telefono = $("#telefono").val();
     let tVal = true;
 
     if(telefono.length != 10)
         tVal = false;
 
     else
-        for(let i = 0; i < tVal.length; i++)
+        for(let i = 0; i < telefono.length; i++)
             if(!esNumero(telefono[i]))
                 tVal = false;
 
@@ -105,10 +136,10 @@ function validarTelefono(){
 }
 
 function validarCorreo(){
-    let correo = $(#correo).value();
+    let correo = $("#correo").val();
     let cVal = true;
 
-    if(correo.lenght < 13)
+    if(correo.length < 15)
         cVal = false;
     else{
         if(correo[0] == '.') 
@@ -131,12 +162,14 @@ function validarCorreo(){
                     )
                 )
                     cVal = false;
+
+                pos++;
             }
 
             //example@alumno.ipn.mx
             //012345678901234567890
 
-            if(pos != (correo.length - 1 - 13))
+            if(pos != (correo.length - 14))
                 cVal = false;
 
             if(correo[pos - 1] == '.')
@@ -152,36 +185,31 @@ function validarCorreo(){
     return cVal;
 }
 
-function validarGenero(){
-    let genero = $(#genero).val();
-    let gVal = true;
-
-    if(
-        genero != "hombre" &&
-        genero != "mujer"
-    ) gVal = false;
-
-    return gVal;
-}
-
-function validarPromedio(){
-    let promedio = $(#promedio).val();
-    let pVal = true;
-
-    if(
-        promedio.length != 4 &&
-        promedio.length != 5
-    )
-        pVal = false;
-    
-    else{
-        if(
-            promedio[0] > '6' && 
-            promedio[0] <= '9'
-        ) pVal = false;
-    }
-}
-
 $(document).ready(function(){
-    
+    $("#formRegistro").submit(function(e){
+
+        if(!validarBoleta()){
+            alert("Boleta inválida");
+            e.preventDefault();
+            return;
+        }
+       
+        if(!validarNombre()){
+            alert("Nombre inválido");
+            e.preventDefault();
+            return;
+        }
+
+        if(!validarTelefono()){
+            alert("Teléfono inválido");
+            e.preventDefault();
+            return;
+        }
+
+        if(!validarCorreo()){
+            alert("Correo inválido");
+            e.preventDefault();
+            return;
+        }
+    });
 })
