@@ -3,7 +3,7 @@ const regexNombre = /^(?:[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]+(?:\s+[A-Za-zÁÉ�
 const regexTelefono = /^\d{10}$/;
 const regexCorreo = /^(?!\.)(?!.*\.\.)[A-Za-z0-9!#$%&'*+/=?^_`{|}~]+(?:\.[A-Za-z0-9!#$%&'*+/=?^_`{|}~]+)*@alumno\.ipn\.mx$/;
 const regexCurp = /^[A-ZÁÉÍÓÚÑ]{4}\d{6}[HM][A-ZÁÉÍÓÚÑ]{5}[A-Z0-9]{2}$/;
-const regexContra = /^.{6,}$/;
+const regexContra = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^A-Za-z0-9]).{6,}$/;
 const regexFechaNacimiento = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
 const regexPromedio = /^(?:[6-9](?:\.\d{1,2})?|10(?:\.0{1,2})?)$/;
 const regexNombreEscuela = /^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ0-9][A-Za-zÁÉÍÓÚÜÑáéíóúüñ0-9\s.,'&()\-\/]{2,}$/;
@@ -99,7 +99,7 @@ function validarFormularioRegistro(){
     }
 
     if(!validarContra()){
-        alert('Contraseña inválida');
+        alert('La contraseña debe contener al menos una mayúscula, una minúscula, un dígito y un cáracter especial.');
         return false;
     }
 
