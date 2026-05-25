@@ -1,6 +1,4 @@
 $(document).ready(function () {
-	if (!$('#formRegistro').length || !$('#btnRegistrar').length) return;
-
 	function showResumen() {
 		var arr = $('#formRegistro').serializeArray();
 		var nombre = $('#formRegistro').find('[name="nombre"]').val();
