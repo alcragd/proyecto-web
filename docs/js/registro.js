@@ -34,17 +34,19 @@ $(document).ready(function () {
 	function registro() {
 		$('#formRegistro').addClass('d-none');
 		showResumen();
-		$('#confirmRegistro').off('click').on('click', function () {
-			confirm();
-			$('#formRegistro')[0].reset();
-			$('#resumenRegistro').addClass('d-none');
-		});
-
-		$('#editarRegistro').off('click').on('click', function () {
-			$('#resumenRegistro').addClass('d-none');
-			$('#formRegistro').removeClass('d-none');
-		});
 	}
+
+
+	$('#confirmRegistro').click(function () {
+		confirm();
+		$('#formRegistro')[0].reset();
+		$('#resumenRegistro').addClass('d-none');
+	});
+
+	$('#editarRegistro').click(function () {
+		$('#resumenRegistro').addClass('d-none');
+		$('#formRegistro').removeClass('d-none');
+	});
 
 	$('#btnRegistrar').click(function () {
 		registro();
