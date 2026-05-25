@@ -48,7 +48,8 @@ $(document).ready(function () {
 		$('#formRegistro').removeClass('d-none');
 	});
 
-	$('#btnRegistrar').click(function () {
+	$('#formRegistro').submit(function (evt) {
+		evt.preventDefault(); 
 		registro();
 	});
 
