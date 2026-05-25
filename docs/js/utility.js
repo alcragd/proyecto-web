@@ -24,3 +24,12 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+
+
+$(document).ready(function (){
+    $('#btnLimpiar').click(function () {
+        $('#nombreEscuela').prop('disabled', true);
+        $('#nombreEscuela').prop('required', false);
+    });
+});
+    

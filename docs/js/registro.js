@@ -1,11 +1,11 @@
 $(document).ready(function () {
 	function showResumen() {
 		var arr = $('#formRegistro').serializeArray();
-		var nombre = $('#formRegistro').find('[name="nombre"]').val();
+		var nombre = $('#formRegistro').find('[name="nombre"]').val().trim();
 
 		$('#resumenSaludo').html('Hola <strong>' + nombre + '</strong>, verifica que los datos que ingresaste sean correctos:');
 
-		var html = '<dl class="row">';
+		var html = '<div class="row">';
 		arr.forEach(function (field) {
 			var name = field.name;
 			var value = field.value;
@@ -15,10 +15,10 @@ $(document).ready(function () {
 				var labelElement = $('#formRegistro').find('label[for="' + fieldElement.attr('id') + '"]');
 				if (labelElement.length) labelText = labelElement.text().trim();
 			}
-			html += '<dt class="col-sm-4">' + labelText + '</dt>';
-			html += '<dd class="col-sm-8"><strong>' + (value || '-') + '</strong></dd>';
+			html += '<div class="col-sm-4">' + labelText + '</div>';
+			html += '<div class="col-sm-8"><strong>' + (value || '-') + '</strong></div>';
 		});
-		html += '</dl>';
+		html += '</div>';
 		$('#resumenContenido').html(html);
 		$('#resumenRegistro').removeClass('d-none');
 		
@@ -50,39 +50,11 @@ $(document).ready(function () {
 
 	$('#formRegistro').submit(function (evt) {
 
+		
+
 		evt.preventDefault();
 	
-		if(!validarBoleta()){
-            alert("Boleta inválida");
-            return;
-        }
-
-
-       
-        if(!validarNombre()){
-            alert("Nombre inválido");
-            return;
-        }
-
-        if(!validarTelefono()){
-            alert("Teléfono inválido");
-            return;
-        }
-
-        if(!validarCorreo()){
-            alert("Correo inválido");
-            return;
-        }
-
-        if(!validarCurp()){
-            alert("Curp inválido");
-            return;
-        }
-
-		if(!validarContra()){
-            alert("Contraseña inválida");
-            return;
-        }
+		if(!validarFormularioRegistro()) return; 
 
 		registro();
 	});
