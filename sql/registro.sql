@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 20-06-2026 a las 05:03:03
+-- Tiempo de generación: 20-06-2026 a las 07:42:20
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -41,6 +41,14 @@ CREATE TABLE `alumnos` (
   `esc_pro` varchar(50) NOT NULL,
   `prom` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `alumnos`
+--
+
+INSERT INTO `alumnos` (`boleta`, `id_usuario`, `nombre`, `pat`, `mat`, `fecha_nac`, `gen`, `curp`, `ent_pro`, `tel`, `esc_pro`, `prom`) VALUES
+('1561561561', 4, 'Zoe', 'Coyol', 'Moreno', '2026-06-22', 'Hombre', 'RAHC060503HMCMRH12', 'Estado de México', '8484848448', 'CECyT 8', 9),
+('2025630390', 3, 'Isaac', 'Ramirez', 'Hernandez', '2026-06-11', 'Hombre', 'RAHC060503HMCMRHA9', 'Estado de México', '5520246547', 'CECyT 8', 9.5);
 
 -- --------------------------------------------------------
 
@@ -87,9 +95,17 @@ CREATE TABLE `laboratorio` (
 CREATE TABLE `usuarios` (
   `id_usuario` int(10) NOT NULL,
   `correo` varchar(50) NOT NULL,
-  `password` varchar(50) NOT NULL,
+  `password` varchar(100) NOT NULL,
   `rol` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `usuarios`
+--
+
+INSERT INTO `usuarios` (`id_usuario`, `correo`, `password`, `rol`) VALUES
+(3, 'isaac@alumno.ipn.mx', '$2y$10$TL2M0HXbmM.c3UW3tE73C.dhszPZe1u3aFmN4lUeZ0F', 0),
+(4, 'zoe@ipn.mx', '$2y$10$QGTZN/IsQi4lpjpeSCZm7OipCt8ALx.CPgohD5igBmd', 0);
 
 --
 -- Índices para tablas volcadas
@@ -156,7 +172,7 @@ ALTER TABLE `laboratorio`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id_usuario` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_usuario` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Restricciones para tablas volcadas

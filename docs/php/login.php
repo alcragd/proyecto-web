@@ -1,4 +1,33 @@
 <?php
+require_once("connection.php");
+
+    
+    $correo = $_POST["correo"];
+    $contra = $_POST["contrasena"];
+    
+
+    $query = "SELECT * FROM usuarios WHERE correo = '$correo'";
+    $resultado = mysqli_query($conexion, $query);
+
+    if(mysqli_num_rows($resultado) > 0){
+        $datos = mysqli_fetch_assoc($resultado);
+        
+        if(password_verify($contra,$datos['password']))
+        {
+            if($datos['rol'] == 1){
+            echo "¡Bienvenido Administrador!";
+        } else {
+            echo "¡Bienvenido! Has iniciado sesión correctamente.";
+        }
+        }
+        else {
+        echo "Error: Contraseña incorrecta.";
+        }
+    } else {
+        echo "Error: Correo o contraseña incorrectos.";
+    }
+
+    mysqli_close($conexion);
 
 $secretKey = "6LeeNyktAAAAAOOphIqMJeqVKh1C9_QXMTSpx5Hw";
 
@@ -32,7 +61,7 @@ $verify = json_decode($result);
 
 if($verify->success){
     
-    echo "Formulario válido";
+    echo "Captcha Valido";
 }else{
     echo "Captcha inválido";
 }

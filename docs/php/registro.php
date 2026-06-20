@@ -1,6 +1,6 @@
 <?php
     require_once("connection.php");
-    $conexion = mysqli_connect($server,$username,$password,$db);
+    
     // 1. Recibir datos de Cuenta
     $correo = $_POST['correo'];
 
