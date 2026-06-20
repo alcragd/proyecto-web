@@ -1,7 +1,7 @@
 const regexBoleta = /^(?:\d{10}|P[PE]\d{8})$/;
-const regexNombre = /^(?:[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]+(?:\s+[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]+)*)$/;
+const regexNombre = /^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s]+$/;
 const regexTelefono = /^\d{10}$/;
-const regexCorreo = /^(?!\.)(?!.*\.\.)[A-Za-z0-9!#$%&'*+/=?^_`{|}~]+(?:\.[A-Za-z0-9!#$%&'*+/=?^_`{|}~]+)*@alumno\.ipn\.mx$/;
+const regexCorreo = /^(?!\.)(?!.*\.\.)[A-Za-z0-9!#$%&'*+/=?^_`{|}~]+(?:\.[A-Za-z0-9!#$%&'*+/=?^_`{|}~]+)*(@alumno\.ipn\.mx|ipn\.mx)$/;
 const regexCurp = /^[A-ZÁÉÍÓÚÑ]{4}\d{6}[HM][A-ZÁÉÍÓÚÑ]{5}[A-Z0-9][0-9]$/;
 const regexContra = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^A-Za-z0-9]).{6,}$/;
 const regexFechaNacimiento = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
@@ -14,7 +14,40 @@ function validarBoleta(){
 }
 
 function validarNombre(){
-    return regexNombre.test($('#nombre').val().trim());
+    const nombre = $('#nombre').val().trim();
+    
+    if(nombre.length === 0){
+        return false;
+    }
+    if(!regexNombre.test(nombre)){
+        return false;
+    }
+
+    return true;
+}
+
+function validarApellidoPaterno(){
+    const apPat = $('#appat').val().trim();
+    
+    if(apPat.length === 0){
+        return false;
+    }
+    if(!regexNombre.test(apPat)){
+        return false;
+    }
+    return true;
+}
+
+function validarApellidoMaterno(){
+    const apMat = $('#apmat').val().trim();
+   
+    if(apMat.length === 0){
+        return false;
+    }
+    if(!regexNombre.test(apMat)){
+        return false;
+    }
+    return true;
 }
 
 function validarFechaNacimiento(){
@@ -63,6 +96,16 @@ function validarFormularioRegistro(){
 
     if(!validarNombre()){
         alert('Nombre inválido');
+        return false;
+    }
+
+    if(!validarApellidoPaterno()){
+        alert('Apellido paterno inválido');
+        return false;
+    }
+
+    if(!validarApellidoMaterno()){
+        alert('Apellido materno inválido');
         return false;
     }
 
