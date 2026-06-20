@@ -1,5 +1,10 @@
 <?php 
-    
+    session_start();
+
+    if(!isset($_SESSION["user"])){
+        header("Location: ../login.html");
+        exit;
+    }
 ?>
 
 <!DOCTYPE html>
@@ -70,7 +75,7 @@
                     <!-- Título del sistema (centro/derecha) -->
                     <div class="d-none d-lg-block text-center">
                         <div class="navbar-titulo">Panel de Alumno</div>
-                        <div class="navbar-subtitulo">Bienvenido -USER-</div>
+                        <div class="navbar-subtitulo">Bienvenido <?= $_SESSION["user"] ?></div>
                     </div>
 
                     <!-- Logo del equipo (extremo derecho) -->
