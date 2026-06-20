@@ -2,6 +2,8 @@ $(document).ready(function () {
     $("#frmLogin").submit(function(e){
         e.preventDefault();
 
+        if(!validarFormularioLogin()) return; 
+
         let captcha = grecaptcha.getResponse();
 
         if(captcha.length === 0){

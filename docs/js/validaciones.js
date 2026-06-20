@@ -150,3 +150,16 @@ function validarFormularioRegistro(){
 
     return true;
 }
+
+function validarFormularioLogin(){
+    if(!validarCorreo()){
+        alert('Correo inválido');
+        return false;
+    }
+    if(!validarContra()){
+        alert('La contraseña debe contener al menos una mayúscula, una minúscula, un dígito y un cáracter especial.');
+        return false;
+    }
+    console.log('validación OK');
+    return true;
+}
