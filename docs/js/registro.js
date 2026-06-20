@@ -38,9 +38,26 @@ $(document).ready(function () {
 
 
 	$('#confirmRegistro').click(function () {
-		confirmRegistro();
-		$('#formRegistro')[0].reset();
-		$('#resumenRegistro').addClass('d-none');
+		let formData = $('#formRegistro').serialize();
+
+        // 2. Hacemos la petición AJAX hacia guardar.php
+        $.ajax({
+            url: "docs/php/registro.php",
+            type: "POST",
+            data: formData,
+            success: function(respuesta) {
+                // 3. Ejecutamos tu función visual que ya tenías
+                confirmRegistro(); 
+                $('#formRegistro')[0].reset();
+                $('#resumenRegistro').addClass('d-none');
+                
+                // 4. Mostramos lo que nos devolvió PHP
+                alert(respuesta);
+            },
+            error: function() {
+                alert("Hubo un error al conectar con el servidor.");
+            }
+        });
 	});
 
 	$('#editarRegistro').click(function () {
