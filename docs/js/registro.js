@@ -26,27 +26,9 @@ $(document).ready(function () {
 
 	function confirmRegistro() {
 		$('#registroSuccess').remove();
-		var msg = $('<div id="registroSuccess" class="alert alert-success mt-3"></div>');
+		var msg = $('<div id="registroSuccess" class="alert alert-success mt-3"><strong>Registro confirmado.</strong> Tus datos han sido registrados.</div>');
 		$('#resumenRegistro').before(msg);
 		
-		$.ajax({
-			url: "docs/php/registro.php",
-			type: "POST",
-			data: $('#formRegistro').serialize(),
-			sucess: function (res){
-				$('#registroSuccess').html(
-                '<strong>Registro confirmado.</strong> Tus datos han sido registrados.' + response
-            	);
-			},
-			error: function () {
-
-            $('#registroSuccess').removeClass('alert-success')
-                                 .addClass('alert-danger')
-                                 .html('<strong>Error al registrar.</strong>');
-
-        }
-		});
-
 	}
 
 	function registro() {
