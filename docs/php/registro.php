@@ -3,7 +3,10 @@
     $conexion = mysqli_connect($server,$username,$password,$db);
     // 1. Recibir datos de Cuenta
     $correo = $_POST['correo'];
+
     $contra = $_POST['contrasena'];
+    $hash = password_hash($contra, PASSWORD_DEFAULT);
+
     $rol = 0; // 0 para alumno
 
     // 2. Recibir Datos Personales y Procedencia
@@ -25,7 +28,7 @@
     }
 
     // --- PRIMERA INSERCIÓN: TABLA USUARIOS ---
-    $queryUser = "INSERT INTO usuarios (correo, password, rol) VALUES ('$correo', '$contra', $rol)";
+    $queryUser = "INSERT INTO usuarios (correo, password, rol) VALUES ('$correo', '$hash', $rol)";
     
     if(mysqli_query($conexion, $queryUser)){
         
