@@ -24,11 +24,29 @@ $(document).ready(function () {
 		
 	}
 
-	function confirm() {
+	function confirmRegistro() {
 		$('#registroSuccess').remove();
-		var msg = $('<div id="registroSuccess" class="alert alert-success mt-3"><strong>Registro confirmado.</strong> Tus datos han sido registrados.</div>');
+		var msg = $('<div id="registroSuccess" class="alert alert-success mt-3"></div>');
 		$('#resumenRegistro').before(msg);
 		
+		$.ajax({
+			url: "docs/php/registro.php",
+			type: "POST",
+			data: $('#formRegistro').serialize(),
+			sucess: function (res){
+				$('#registroSuccess').html(
+                '<strong>Registro confirmado.</strong> Tus datos han sido registrados.' + response
+            	);
+			},
+			error: function () {
+
+            $('#registroSuccess').removeClass('alert-success')
+                                 .addClass('alert-danger')
+                                 .html('<strong>Error al registrar.</strong>');
+
+        }
+		});
+
 	}
 
 	function registro() {
@@ -38,7 +56,7 @@ $(document).ready(function () {
 
 
 	$('#confirmRegistro').click(function () {
-		confirm();
+		confirmRegistro();
 		$('#formRegistro')[0].reset();
 		$('#resumenRegistro').addClass('d-none');
 	});
@@ -49,12 +67,10 @@ $(document).ready(function () {
 	});
 
 	$('#formRegistro').submit(function (evt) {
-
-		
-
 		evt.preventDefault();
-	
 		if(!validarFormularioRegistro()) return; 
+
+
 
 		registro();
 	});
