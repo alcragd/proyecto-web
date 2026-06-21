@@ -3,7 +3,7 @@
 
     // Validación de sesión activa y rol de alumno (0)
     if(!isset($_SESSION["usuario"]) || $_SESSION["rol"] != "0"){
-        header("Location: ../login.html");
+        header("Location: ../login.php");
         exit;
     }
 ?>
@@ -73,7 +73,7 @@
                         <div class="collapse navbar-collapse" id="menuPrincipal">
                             <ul class="navbar-nav ms-auto">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="../index.html"><i class="bi bi-house-door me-1"></i>Inicio</a>
+                                    <a class="nav-link" href="../index.php"><i class="bi bi-house-door me-1"></i>Inicio</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="../docs/php/logout.php"><i class="bi bi-box-arrow-right me-1"></i>Cerrar Sesión</a>
@@ -189,7 +189,7 @@
     
     <script>
     (function () {
-        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+        const currentPage = window.location.pathname.split('/').pop() || 'index.php';
         document.querySelectorAll('.navbar-nav-bar .nav-link').forEach(function (link) {
             const href = link.getAttribute('href');
             if (href === currentPage) {

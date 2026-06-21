@@ -1,3 +1,14 @@
+<?php
+session_start();
+if(isset($_SESSION["usuario"])){
+    if($_SESSION["rol"] == "1") {
+        header("Location: admin/");
+    } else {
+        header("Location: alumno/");
+    }
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -87,17 +98,17 @@
                         <div class="collapse navbar-collapse" id="menuPrincipal">
                             <ul class="navbar-nav ms-auto">
                                 <li class="nav-item">
-                                    <a class="nav-link"  href="index.html">
+                                    <a class="nav-link"  href="index.php">
                                         <i class="bi bi-house-door me-1"></i>Inicio
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href="registro.html">
+                                    <a class="nav-link active" aria-current="page" href="registro.php">
                                         <i class="bi bi-person-plus me-1"></i>Registro
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="login.html">
+                                    <a class="nav-link" href="login.php">
                                         <i class="bi bi-shield-lock me-1"></i>Iniciar Sesión
                                     </a>
                                 </li>
@@ -338,9 +349,9 @@
                 <div class="col-6 col-md-2">
                     <h3 class="footer-titulo-col">Navegación</h3>
                     <ul class="footer-link-list">
-                        <li><a href="index.html"><i class="bi bi-chevron-right me-1"></i>Inicio</a></li>
-                        <li><a href="registro.html"><i class="bi bi-chevron-right me-1"></i>Registro</a></li>
-                        <li><a href="login.html"><i class="bi bi-chevron-right me-1"></i>Iniciar Sesión</a></li>
+                        <li><a href="index.php"><i class="bi bi-chevron-right me-1"></i>Inicio</a></li>
+                        <li><a href="registro.php"><i class="bi bi-chevron-right me-1"></i>Registro</a></li>
+                        <li><a href="login.php"><i class="bi bi-chevron-right me-1"></i>Iniciar Sesión</a></li>
                     </ul>
                 </div>
 
@@ -348,9 +359,9 @@
                 <div class="col-6 col-md-3">
                     <h3 class="footer-titulo-col">Proceso de admisión</h3>
                     <ul class="footer-link-list">
-                        <li><a href="index.html#avisos"><i class="bi bi-chevron-right me-1"></i>Documentos requeridos</a></li>
-                        <li><a href="index.html#avisos"><i class="bi bi-chevron-right me-1"></i>Fechas importantes</a></li>
-                        <li><a href="index.html#avisos"><i class="bi bi-chevron-right me-1"></i>Preguntas frecuentes</a></li>
+                        <li><a href="index.php#avisos"><i class="bi bi-chevron-right me-1"></i>Documentos requeridos</a></li>
+                        <li><a href="index.php#avisos"><i class="bi bi-chevron-right me-1"></i>Fechas importantes</a></li>
+                        <li><a href="index.php#avisos"><i class="bi bi-chevron-right me-1"></i>Preguntas frecuentes</a></li>
                     </ul>
                 </div>
 

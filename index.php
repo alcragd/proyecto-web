@@ -1,3 +1,10 @@
+<?php
+    session_start();
+    
+    $sesionIniciada = isset($_SESSION["usuario"]);
+    $rol = isset($_SESSION["rol"]) ? $_SESSION["rol"] : null; 
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -94,20 +101,29 @@
                         <div class="collapse navbar-collapse" id="menuPrincipal">
                             <ul class="navbar-nav ms-auto">
                                 <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href="index.html">
-                                        <i class="bi bi-house-door me-1"></i>Inicio
-                                    </a>
+                                    <a class="nav-link" href="index.php"><i class="bi bi-house-door me-1"></i>Inicio</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="registro.html">
-                                        <i class="bi bi-person-plus me-1"></i>Registro
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="login.html">
-                                        <i class="bi bi-shield-lock me-1"></i>Iniciar Sesión
-                                    </a>
-                                </li>
+
+                                <?php if (!$sesionIniciada): ?>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="registro.php"><i class="bi bi-person-plus me-1"></i>Registro</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="login.php"><i class="bi bi-shield-lock me-1"></i>Iniciar Sesión</a>
+                                    </li>
+                                <?php else: ?>
+                                    <?php if ($rol == "1"): ?>
+                                        <li class="nav-item"><a class="nav-link" href="admin/">Panel Admin</a></li>
+                                    <?php else: ?>
+                                        <li class="nav-item"><a class="nav-link" href="alumno/">Mi Cuenta</a></li>
+                                    <?php endif; ?>
+                                    
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="docs/php/logout.php">
+                                            <i class="bi bi-box-arrow-right me-1"></i>Cerrar Sesión
+                                        </a>
+                                    </li>
+                                <?php endif; ?>
                             </ul>
                         </div>
                     </nav>
@@ -142,7 +158,7 @@
                                 Inicia tu proceso de registro y forma parte de una de las escuelas
                                 de ingeniería más destacadas del Instituto Politécnico Nacional.
                             </p>
-                            <a href="registro.html" class="btn-slider">
+                            <a href="registro.php" class="btn-slider">
                                 <i class="bi bi-person-plus me-2"></i>Iniciar registro
                             </a>
                         </div>s
@@ -222,7 +238,7 @@
                             <span class="icono-acceso"><i class="bi bi-person-plus-fill"></i></span>
                             <h5>Registro</h5>
                             <p>Completa tus datos personales, de procedencia y crea tu cuenta institucional.</p>
-                            <a href="registro.html" class="btn-card-acceso">Ir a registro</a>
+                            <a href="registro.php" class="btn-card-acceso">Ir a registro</a>
                         </div>
                     </div>
 
@@ -363,7 +379,7 @@
                         </div>
 
                         <div class="mt-3 text-center">
-                            <a href="registro.html" class="btn-institucional d-inline-block w-100">
+                            <a href="registro.php" class="btn-institucional d-inline-block w-100">
                                 <i class="bi bi-person-plus me-2"></i>Iniciar mi registro
                             </a>
                         </div>
@@ -410,9 +426,9 @@
                 <div class="col-6 col-md-2">
                     <h3 class="footer-titulo-col">Navegación</h3>
                     <ul class="footer-link-list">
-                        <li><a href="index.html"><i class="bi bi-chevron-right me-1"></i>Inicio</a></li>
-                        <li><a href="registro.html"><i class="bi bi-chevron-right me-1"></i>Registro</a></li>
-                        <li><a href="login.html"><i class="bi bi-chevron-right me-1"></i>Iniciar Sesión</a></li>
+                        <li><a href="index.php"><i class="bi bi-chevron-right me-1"></i>Inicio</a></li>
+                        <li><a href="registro.php"><i class="bi bi-chevron-right me-1"></i>Registro</a></li>
+                        <li><a href="login.php"><i class="bi bi-chevron-right me-1"></i>Iniciar Sesión</a></li>
                     </ul>
                 </div>
 
@@ -463,7 +479,7 @@
     <!-- Script mínimo de Persona 1: activar nav-link correcto según página -->
     <script>
     (function () {
-        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+        const currentPage = window.location.pathname.split('/').pop() || 'index.php';
         document.querySelectorAll('.navbar-nav-bar .nav-link').forEach(function (link) {
             const href = link.getAttribute('href');
             if (href === currentPage) {
