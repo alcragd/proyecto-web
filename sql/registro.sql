@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 21-06-2026 a las 02:40:02
+-- Tiempo de generación: 21-06-2026 a las 04:45:13
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `registro`
+-- Base de datos: `registro2`
 --
 
 -- --------------------------------------------------------
@@ -27,7 +27,6 @@ SET time_zone = "+00:00";
 -- Estructura de tabla para la tabla `alumnos`
 --
 
-DROP TABLE IF EXISTS `alumnos`;
 CREATE TABLE `alumnos` (
   `boleta` varchar(10) NOT NULL,
   `id_usuario` int(10) NOT NULL,
@@ -49,12 +48,11 @@ CREATE TABLE `alumnos` (
 -- Estructura de tabla para la tabla `asignacion_examen`
 --
 
-DROP TABLE IF EXISTS `asignacion_examen`;
 CREATE TABLE `asignacion_examen` (
   `id_asignacion` int(10) NOT NULL,
   `boleta` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `id_lab` int(11) NOT NULL,
-  `id_hoario` int(11) NOT NULL
+  `id_horario` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -63,12 +61,20 @@ CREATE TABLE `asignacion_examen` (
 -- Estructura de tabla para la tabla `horarios`
 --
 
-DROP TABLE IF EXISTS `horarios`;
 CREATE TABLE `horarios` (
   `id_horario` int(10) NOT NULL,
   `hora_ini` time NOT NULL,
   `hora_fin` time NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `horarios`
+--
+
+INSERT INTO `horarios` (`id_horario`, `hora_ini`, `hora_fin`) VALUES
+(1, '08:00:00', '09:30:00'),
+(2, '09:45:00', '11:15:00'),
+(3, '11:30:00', '13:00:00');
 
 -- --------------------------------------------------------
 
@@ -76,11 +82,21 @@ CREATE TABLE `horarios` (
 -- Estructura de tabla para la tabla `laboratorio`
 --
 
-DROP TABLE IF EXISTS `laboratorio`;
 CREATE TABLE `laboratorio` (
   `id_lab` int(10) NOT NULL,
   `nombre` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `laboratorio`
+--
+
+INSERT INTO `laboratorio` (`id_lab`, `nombre`) VALUES
+(1, 'Laboratorio 1'),
+(2, 'Laboratorio 2'),
+(3, 'Laboratorio 3'),
+(4, 'Laboratorio 4'),
+(5, 'Laboratorio 5');
 
 -- --------------------------------------------------------
 
@@ -88,7 +104,6 @@ CREATE TABLE `laboratorio` (
 -- Estructura de tabla para la tabla `usuarios`
 --
 
-DROP TABLE IF EXISTS `usuarios`;
 CREATE TABLE `usuarios` (
   `id_usuario` int(10) NOT NULL,
   `correo` varchar(50) NOT NULL,
@@ -114,7 +129,7 @@ ALTER TABLE `asignacion_examen`
   ADD PRIMARY KEY (`id_asignacion`),
   ADD KEY `fk_alumno_asignacion` (`boleta`),
   ADD KEY `fk_lab_asign` (`id_lab`),
-  ADD KEY `fk_horario_asign` (`id_hoario`);
+  ADD KEY `fk_horario_asign` (`id_horario`);
 
 --
 -- Indices de la tabla `horarios`
@@ -134,9 +149,7 @@ ALTER TABLE `laboratorio`
 ALTER TABLE `usuarios`
   ADD PRIMARY KEY (`id_usuario`),
   ADD UNIQUE KEY `boleta_o_user` (`correo`),
-  ADD UNIQUE KEY `correo` (`correo`),
-  ADD UNIQUE KEY `correo_2` (`correo`),
-  ADD UNIQUE KEY `correo_3` (`correo`);
+  ADD UNIQUE KEY `correo` (`correo`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -152,13 +165,13 @@ ALTER TABLE `asignacion_examen`
 -- AUTO_INCREMENT de la tabla `horarios`
 --
 ALTER TABLE `horarios`
-  MODIFY `id_horario` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_horario` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `laboratorio`
 --
 ALTER TABLE `laboratorio`
-  MODIFY `id_lab` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_lab` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
@@ -181,7 +194,7 @@ ALTER TABLE `alumnos`
 --
 ALTER TABLE `asignacion_examen`
   ADD CONSTRAINT `fk_alumno_asignacion` FOREIGN KEY (`boleta`) REFERENCES `alumnos` (`boleta`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_horario_asign` FOREIGN KEY (`id_hoario`) REFERENCES `horarios` (`id_horario`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_horario_asign` FOREIGN KEY (`id_horario`) REFERENCES `horarios` (`id_horario`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_lab_asign` FOREIGN KEY (`id_lab`) REFERENCES `laboratorio` (`id_lab`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
