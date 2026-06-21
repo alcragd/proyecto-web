@@ -288,8 +288,7 @@
                 </select>
             </div>
         </div>
-    </div>
-    <div id="seccionCuenta">
+        <div id="seccionCuenta">
             <h6 class="text-guinda fw-bold mb-3 mt-4"><i class="bi bi-shield-lock-fill me-2"></i>Datos de Cuenta de Acceso</h6>
             <div class="row g-3">
                 <div class="col-md-6">
@@ -302,6 +301,8 @@
                 </div>
             </div>
         </div>
+    </div>
+    
     <div class="modal-footer">
         <button type="button" class="btn btn-institucional-outline text-uppercase fw-bold" data-bs-dismiss="modal">Cerrar</button>
         <button type="submit" class="btn btn-institucional text-uppercase fw-bold" style="background-color: var(--ipn-guinda); color: white;">Guardar Cambios</button>
