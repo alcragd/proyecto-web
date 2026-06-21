@@ -139,7 +139,7 @@ if(isset($_SESSION["usuario"])){
         <div class="container-sm my-5 p-2">
             <div class="card mb-4 shadow-sm border-1 p-3" style="border-top: 4px solid var(--ipn-guinda) !important;">
                     <div class="card-header bg-white py-3">
-                        <h4 class="mb-0 fw-bold">Ingresa tus credenciales</h4>
+                        <h4 class="mb-0 fw-bold"><i class="bi bi-key-fill"></i> Ingresa tus credenciales</h4>
                     </div>
             <!-- <div class="mb-4">
                 <h2>Ingresa tus credenciales</h2>
