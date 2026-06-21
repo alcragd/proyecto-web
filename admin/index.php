@@ -547,6 +547,20 @@ $(document).on('click', '.btn-editar', function() {
         }
     });
     });
+
+    const anioActual = new Date().getFullYear();
+    
+    const anioMax = anioActual - 17;
+    
+    const anioMin = anioActual - 100;
+
+    const fechaMax = `${anioMax}-12-31`; 
+    const fechaMin = `${anioMin}-01-01`;
+
+    const $inputFecha = $("#fechaNacimiento");
+    $inputFecha.attr("max", fechaMax);
+    $inputFecha.attr("min", fechaMin);
+
 });
 </script>
 </body>
