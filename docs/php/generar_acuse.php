@@ -26,6 +26,7 @@ class PDF extends FPDF {
     function Footer() {
         $this->SetY(-25);
         $this->SetFont('times', 'I', 10);
+        $this->SetTextColor(0,0,0);
         $this->MultiCell(0, 6, utf8_decode('Nota: Por favor, preséntate 10 minutos antes de tu horario asignado con una identificación oficial. Este documento es tu comprobante oficial de registro.'));
 
         $this->SetY(-15);
@@ -93,12 +94,12 @@ imprimirFila($pdf, 'Promedio:', $datos['prom']);
 $pdf->Ln(20);
 
 // --- DATOS DE ASIGNACIÓN ---
-$pdf->SetTextColor(104, 36, 68); // Color Guinda
+$pdf->SetTextColor(52,50,84);
 $pdf->SetFont('times', 'B', 14);
 $pdf->Cell(0, 10, utf8_decode('Detalles de tu Examen Diagnóstico:'), 0, 1, 'L');
 
 // Definir colores y fuente para la tabla
-$pdf->SetFillColor(240, 240, 240); 
+$pdf->SetFillColor(220, 220, 220); 
 $pdf->SetTextColor(0, 0, 0);       
 $pdf->SetFont('Arial', 'B', 12);
 $pdf->Ln(5); 
@@ -109,6 +110,7 @@ $pdf->Cell(95, 10, utf8_decode('Horario'), 1, 1, 'C', true);
 
 // Contenido de la tabla
 $pdf->SetFont('Arial', '', 12);
+$pdf->SetTextColor(91,18,55);
 $pdf->Cell(95, 10, utf8_decode($datos['laboratorio']), 1, 0, 'C');
 $horarioTexto = $datos['hora_ini'] . ' a ' . $datos['hora_fin'] . ' hrs';
 $pdf->Cell(95, 10, utf8_decode($horarioTexto), 1, 1, 'C');
