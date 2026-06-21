@@ -53,11 +53,28 @@ if($accion === 'editar') {
     
     echo "success";
 
+
 // 2. OPERACIÓN: REGISTRO ADMINISTRATIVO COMPLETO (CREATE)
 } else if($accion === 'crear') {
-    // Generar credenciales de acceso para el nuevo alumno
+    
+    // --- NUEVA VALIDACIÓN: PREVENIR BOLETAS DUPLICADAS ---
+    $stmtVerificar = mysqli_prepare($conexion, "SELECT boleta FROM alumnos WHERE boleta = ?");
+    mysqli_stmt_bind_param($stmtVerificar, "s", $boleta);
+    mysqli_stmt_execute($stmtVerificar);
+    mysqli_stmt_store_result($stmtVerificar);
+    
+    // Si la base de datos nos regresa 1 o más filas, significa que ya existe
+    if(mysqli_stmt_num_rows($stmtVerificar) > 0) {
+        echo "Error: El número de boleta '$boleta' ya se encuentra registrado en el sistema.";
+        mysqli_stmt_close($stmtVerificar);
+        exit; // Detenemos el código aquí para no crear usuarios fantasma
+    }
+    mysqli_stmt_close($stmtVerificar);
+    // -----------------------------------------------------
+
+    // Si la boleta está libre, procedemos normalmente a crear credenciales
     $correoAspirante = "boleta_" . $boleta . "@alumno.ipn.mx";
-    $passHash = password_hash($boleta, PASSWORD_DEFAULT); // Su contraseña inicial será su propia boleta
+    $passHash = password_hash($boleta, PASSWORD_DEFAULT);
     $rolAlumno = 0;
 
     $stmtUser = mysqli_prepare($conexion, "INSERT INTO usuarios (correo, password, rol) VALUES (?, ?, ?)");
@@ -67,14 +84,14 @@ if($accion === 'editar') {
         $id_usuario = mysqli_insert_id($conexion);
         mysqli_stmt_close($stmtUser);
 
-        // Guardar expediente íntegro del alumno
+        // Guardar expediente íntegro
         $sqlInsertAlum = "INSERT INTO alumnos (boleta, id_usuario, nombre, pat, mat, fecha_nac, gen, curp, ent_pro, tel, esc_pro, prom) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmtAlum = mysqli_prepare($conexion, $sqlInsertAlum);
         mysqli_stmt_bind_param($stmtAlum, "sisssssssssd", $boleta, $id_usuario, $nombre, $pat, $mat, $fecha_nac, $gen, $curp, $ent_pro, $tel, $esc_pro, $prom);
         mysqli_stmt_execute($stmtAlum);
         mysqli_stmt_close($stmtAlum);
 
-        // Guardar su asignación operativa
+        // Guardar asignación operativa
         $stmtAsign = mysqli_prepare($conexion, "INSERT INTO asignacion_examen (boleta, id_lab, id_horario) VALUES (?, ?, ?)");
         mysqli_stmt_bind_param($stmtAsign, "sii", $boleta, $id_lab, $id_horario);
         mysqli_stmt_execute($stmtAsign);
@@ -82,7 +99,7 @@ if($accion === 'editar') {
 
         echo "success";
     } else {
-        echo "Error: El número de boleta ya se encuentra asignado a otra cuenta.";
+        echo "Error interno: No se pudo generar la cuenta de usuario.";
     }
 }
 
