@@ -22,7 +22,6 @@
     $datos = mysqli_fetch_assoc($res);
 
     if($datos) {
-        // Generamos el HTML directamente aquí
         echo '
             <div class="col-12 col-md-6 mt-2">
                 <div class="ticket-label"><i class="bi bi-geo-alt-fill me-1"></i> Laboratorio Asignado</div>
