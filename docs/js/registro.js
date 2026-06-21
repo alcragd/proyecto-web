@@ -24,11 +24,24 @@ $(document).ready(function () {
 		
 	}
 
-	function confirmRegistro() {
-		$('#registroSuccess').remove();
-		var msg = $('<div id="registroSuccess" class="alert alert-success mt-3"><strong>Registro confirmado.</strong> Tus datos han sido registrados.</div>');
-		$('#resumenRegistro').before(msg);
+	function confirmRegistro(boleta) {
 		
+		$('#registroSuccess').remove();
+		
+		
+		var msg = $(`
+			<div id="registroSuccess" class="alert alert-success mt-3">
+				<strong>Registro confirmado.</strong> Tus datos han sido registrados correctamente.
+				<br><br>
+				<a href="docs/php/generar_acuse.php?boleta=${boleta}" 
+				class="btn btn-institucional" 
+				target="_blank">
+				<i class="bi bi-file-earmark-pdf"></i> Imprimir Acuse
+				</a>
+			</div>
+		`);
+		
+		$('#resumenRegistro').before(msg);
 	}
 
 	function registro() {
@@ -48,13 +61,9 @@ $(document).ready(function () {
             success: function(respuesta) {
 
 				if(respuesta == "Registro exitoso") {
-					confirmRegistro(); 
+					confirmRegistro($('#boleta').val()); 
 					$('#formRegistro')[0].reset();
                 	$('#resumenRegistro').addClass('d-none');
-
-					// let boletaUsuario = $('#boleta').val();
-
-					// window.open('docs/php/generar_acuse.php?boleta=' + boletaUsuario, '_blank');
 				}
 				else {
 					alert(respuesta);
