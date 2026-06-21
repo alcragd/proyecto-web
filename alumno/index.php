@@ -111,13 +111,7 @@
                                         <div class="ticket-label">Estatus</div>
                                         <div class="ticket-data text-success">Registrado</div>
                                     </div>
-                                    <div class="col-12 col-md-6 mt-2">
-                                        <div class="ticket-label"><i class="bi bi-geo-alt-fill me-1"></i> Laboratorio Asignado</div>
-                                        <div class="ticket-data text-escom">Laboratorio 1</div>
-                                    </div>
-                                    <div class="col-12 col-md-6 mt-2">
-                                        <div class="ticket-label"><i class="bi bi-clock-fill me-1"></i> Horario de Examen</div>
-                                        <div class="ticket-data text-escom">08:00 - 09:30 hrs</div>
+                                    <div class="row text-center text-md-start" id="contenedorDatosExamen">
                                     </div>
                                 </div>
                             </div>
@@ -207,6 +201,21 @@
             }
         });
     })();
+    </script>
+    <script>
+        $(document).ready(function() {
+            $.ajax({
+                url: '../docs/php/get_datos_alumno.php',
+                type: 'GET',
+                success: function(respuestaHTML) {
+                    // Insertamos el HTML que nos envió PHP directamente
+                    $('#contenedorDatosExamen').html(respuestaHTML);
+                },
+                error: function() {
+                    $('#contenedorDatosExamen').html("Error al cargar la información.");
+                }
+            });
+        });
     </script>
 </body>
 
