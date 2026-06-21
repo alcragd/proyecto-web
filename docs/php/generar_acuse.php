@@ -116,10 +116,7 @@ $horarioTexto = $datos['hora_ini'] . ' a ' . $datos['hora_fin'] . ' hrs';
 $pdf->Cell(95, 10, utf8_decode($horarioTexto), 1, 1, 'C');
 
 
-
-
-// Generar PDF
-$pdf->Output('I', 'Acuse_Registro_'.$boleta.'.pdf');
+$pdf->Output('D', 'Acuse_Registro_'.$boleta.'.pdf');
 
 mysqli_close($conexion);
 ?>

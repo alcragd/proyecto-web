@@ -19,10 +19,10 @@ $(document).ready(function () {
             success:function(respuesta){
                 let res = respuesta.trim();
                 if(res == "0"){
-                    window.location.href = "./alumno/index.php";
+                    window.location.href = "./alumno/";
 
                 }else if(res == "1"){
-                    window.location.href = "./admin/index.php";
+                    window.location.href = "./admin/";
 
                 }else{
                     alert(res);

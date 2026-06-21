@@ -125,16 +125,9 @@
                             <div class="bg-light p-4 rounded text-center border mt-4">
                                 <h5 class="fw-bold mb-3">Descargar Acuse de Registro</h5>
                                 <p class="small text-muted mb-4">Es obligatorio presentar este acuse impreso el día de tu examen diagnóstico junto con una identificación oficial.</p>
-                                
-                                <form action="generar_pdf.php" method="POST" target="_blank" id="frmImprimirAcuse">
-                                    <div class="d-flex justify-content-center mb-4">
-                                        <div class="g-recaptcha" data-sitekey="6LeeNyktAAAAAExUm6WtHBTq70bQUfh_Jv-2u9sn"></div>
-                                    </div>
-                                    
-                                    <button type="submit" class="btn btn-institucional btn-lg w-100" style="max-width: 300px;" onclick="window.open('../docs/php/generar_acuse.php?boleta=<?php echo $_SESSION['boleta']; ?>', '_blank')">
+                                    <button type="submit" class="btn btn-institucional btn-lg w-100" style="max-width: 300px;" onclick="window.open('../docs/php/generar_acuse.php?boleta=<?= $_SESSION['boleta'] ?>', '_blank')">
                                         <i class="bi bi-file-earmark-pdf-fill me-2"></i> Imprimir Acuse
                                     </button>
-                                </form>
                             </div>
 
                         </div>
@@ -214,15 +207,6 @@
             }
         });
     })();
-    </script>
-
-    <script>
-        document.getElementById('frmImprimirAcuse').addEventListener('submit', function(e) {
-            if(grecaptcha.getResponse().length === 0) {
-                e.preventDefault();
-                alert("Por favor, completa el CAPTCHA para descargar tu acuse.");
-            }
-        });
     </script>
 </body>
 
