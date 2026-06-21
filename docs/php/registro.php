@@ -1,15 +1,27 @@
 <?php
-    require_once("connection.php");
-    
-    // 1. Recibir datos de Cuenta
+
+require_once("connection.php");
+
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+
+try{
+
+    mysqli_begin_transaction($conexion);
+
+    /* ======================
+       DATOS
+    ====================== */
+
     $correo = $_POST['correo'];
 
     $contra = $_POST['contrasena'];
-    $hash = password_hash($contra, PASSWORD_DEFAULT);
+    $hash = password_hash(
+        $contra,
+        PASSWORD_DEFAULT
+    );
 
-    $rol = 0; // 0 para alumno
+    $rol = 0;
 
-    // 2. Recibir Datos Personales y Procedencia
     $boleta = $_POST['boleta'];
     $nombre = $_POST['nombre'];
     $pat = $_POST['appat'];
@@ -22,32 +34,103 @@
     $esc_pro = $_POST['escuelaProcedencia'];
     $prom = $_POST['promedio'];
 
-    // Lógica para atrapar el nombre de la escuela si seleccionó "Otro"
-    if ($esc_pro === "Otro" && isset($_POST['nombreEscuela'])) {
-        $esc_pro = $_POST['nombreEscuela'];
+    if(
+        $esc_pro==="Otro" &&
+        isset($_POST['nombreEscuela'])
+    ){
+        $esc_pro=$_POST['nombreEscuela'];
     }
 
-    // --- PRIMERA INSERCIÓN: TABLA USUARIOS ---
-    $queryUser = "INSERT INTO usuarios (correo, password, rol) VALUES ('$correo', '$hash', $rol)";
-    
-    if(mysqli_query($conexion, $queryUser)){
-        
-        // Recuperamos el id_usuario que se acaba de crear automáticamente por el AUTO_INCREMENT
-        $id_usuario = mysqli_insert_id($conexion);
+    /* ======================
+       INSERT usuarios
+    ====================== */
 
-        // --- SEGUNDA INSERCIÓN: TABLA ALUMNOS ---
-        $queryAlumno = "INSERT INTO alumnos (boleta, id_usuario, nombre, pat, mat, fecha_nac, gen, curp, ent_pro, tel, esc_pro, prom) 
-                        VALUES ('$boleta', $id_usuario, '$nombre', '$pat', '$mat', '$fecha_nac', '$gen', '$curp', '$ent_pro', '$tel', '$esc_pro', $prom)";
-        
-        if(mysqli_query($conexion, $queryAlumno)){
-            echo "Registro exitoso. Tu información se guardó correctamente en el sistema.";
-        } else {
-            echo "Error al guardar el alumno: " . mysqli_error($conexion);
-        }
+    $stmtUser = mysqli_prepare(
+        $conexion,
+        "INSERT INTO usuarios
+        (correo,password,rol)
+        VALUES(?,?,?)"
+    );
 
-    } else {
-        echo "Error al crear la cuenta (Es probable que el correo ya exista): " . mysqli_error($conexion);
+    mysqli_stmt_bind_param(
+        $stmtUser,
+        "ssi",
+        $correo,
+        $hash,
+        $rol
+    );
+
+    mysqli_stmt_execute($stmtUser);
+
+    $id_usuario = mysqli_insert_id($conexion);
+
+    /* ======================
+       INSERT alumnos
+    ====================== */
+
+    $stmtAlumno = mysqli_prepare(
+        $conexion,
+        "INSERT INTO alumnos
+        (
+        boleta,
+        id_usuario,
+        nombre,
+        pat,
+        mat,
+        fecha_nac,
+        gen,
+        curp,
+        ent_pro,
+        tel,
+        esc_pro,
+        prom
+        )
+        VALUES
+        (?,?,?,?,?,?,?,?,?,?,?,?)"
+    );
+
+    mysqli_stmt_bind_param(
+        $stmtAlumno,
+        "sisssssssssd",
+        $boleta,
+        $id_usuario,
+        $nombre,
+        $pat,
+        $mat,
+        $fecha_nac,
+        $gen,
+        $curp,
+        $ent_pro,
+        $tel,
+        $esc_pro,
+        $prom
+    );
+
+    mysqli_stmt_execute($stmtAlumno);
+
+    mysqli_commit($conexion);
+
+    echo "Registro exitoso";
+
+}catch(mysqli_sql_exception $e){
+
+    mysqli_rollback($conexion);
+
+    if($e->getCode()==1062){
+
+        echo "El correo o boleta ya existen";
+
+    }else{
+
+        echo "Error interno del sistema";
+
+        // Desarrollo:
+        // echo $e->getMessage();
+
     }
 
-    mysqli_close($conexion);
+}
+
+mysqli_close($conexion);
+
 ?>

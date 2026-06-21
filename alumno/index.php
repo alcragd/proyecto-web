@@ -1,7 +1,7 @@
 <?php 
     session_start();
 
-    if(!isset($_SESSION["user"])){
+    if(!isset($_SESSION["usuario"]) || $_SESSION["rol"] != "0"){
         header("Location: ../login.html");
         exit;
     }
@@ -75,7 +75,7 @@
                     <!-- Título del sistema (centro/derecha) -->
                     <div class="d-none d-lg-block text-center">
                         <div class="navbar-titulo">Panel de Alumno</div>
-                        <div class="navbar-subtitulo">Bienvenido <?= $_SESSION["user"] ?></div>
+                        <div class="navbar-subtitulo">Bienvenido <?= $_SESSION["usuario"] ?></div>
                     </div>
 
                     <!-- Logo del equipo (extremo derecho) -->

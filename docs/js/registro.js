@@ -46,13 +46,16 @@ $(document).ready(function () {
             type: "POST",
             data: formData,
             success: function(respuesta) {
-                // 3. Ejecutamos tu función visual que ya tenías
-                confirmRegistro(); 
-                $('#formRegistro')[0].reset();
-                $('#resumenRegistro').addClass('d-none');
+
+				if(respuesta == "Registro exitoso") {
+					confirmRegistro(); 
+					$('#formRegistro')[0].reset();
+                	$('#resumenRegistro').addClass('d-none');
+				}
+				else {
+					alert(respuesta);
+				}
                 
-                // 4. Mostramos lo que nos devolvió PHP
-                alert(respuesta);
             },
             error: function() {
                 alert("Hubo un error al conectar con el servidor.");
