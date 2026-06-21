@@ -289,7 +289,19 @@
             </div>
         </div>
     </div>
-    
+    <div id="seccionCuenta">
+            <h6 class="text-guinda fw-bold mb-3 mt-4"><i class="bi bi-shield-lock-fill me-2"></i>Datos de Cuenta de Acceso</h6>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label for="correo" class="form-label fw-semibold text-muted">Correo Institucional</label>
+                    <input type="email" class="form-control" name="correo" id="correo" placeholder="ejemplo@alumno.ipn.mx">
+                </div>
+                <div class="col-md-6">
+                    <label for="contrasena" class="form-label fw-semibold text-muted">Contraseña Provisional</label>
+                    <input type="text" class="form-control" name="contrasena" id="contrasena" placeholder="Mayúscula, minúscula, número y especial">
+                </div>
+            </div>
+        </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-institucional-outline text-uppercase fw-bold" data-bs-dismiss="modal">Cerrar</button>
         <button type="submit" class="btn btn-institucional text-uppercase fw-bold" style="background-color: var(--ipn-guinda); color: white;">Guardar Cambios</button>
@@ -415,7 +427,12 @@ $('#btnNuevoAlumno').click(function() {
     $('#frmCrudAlumno')[0].reset();
     $('#accionCrud').val('crear');
     $('input[name="boleta"]').prop('readonly', false);
-    $('#nombreEscuela').prop('disabled', true); // Aseguramos que inicie bloqueado
+    $('#nombreEscuela').prop('disabled', true); 
+    
+    // Mostramos la sección de cuenta y hacemos obligatorios los campos
+    $('#seccionCuenta').show();
+    $('#correo, #contrasena').prop('required', true);
+    
     $('.modal-title').html('<i class="bi bi-person-plus me-2"></i>Registrar Nuevo Alumno');
 });
 
@@ -426,6 +443,11 @@ $(document).on('click', '.btn-editar', function() {
     $('#frmCrudAlumno')[0].reset();
     $('#accionCrud').val('editar');
     $('input[name="boleta"]').prop('readonly', true);
+    
+    // Ocultamos la sección de cuenta y quitamos la obligatoriedad para que no marque error al guardar
+    $('#seccionCuenta').hide();
+    $('#correo, #contrasena').prop('required', false).val('');
+    
     $('.modal-title').html('<i class="bi bi-pencil-square me-2"></i>Actualizar Expediente Completo');
 
     $.ajax({
@@ -488,10 +510,9 @@ $(document).on('click', '.btn-editar', function() {
         });
 
         // 5. CREATE / UPDATE: Botón de Guardar en el Modal
-        $('#frmCrudAlumno').submit(function(e) {
-        e.preventDefault();
+    $('#frmCrudAlumno').submit(function(e) {
+    e.preventDefault();
     
-    // Reutilizamos todas las validaciones (¡Ahora sí incluimos validarNombreEscuela!)
     if(!validarBoleta()){ alert('Boleta inválida. Debe tener 10 dígitos o formato PE/PP.'); return; }
     if(!validarNombre()){ alert('Nombre inválido. Solo usa letras.'); return; }
     if(!validarApellidoPaterno()){ alert('Apellido paterno inválido.'); return; }
@@ -500,7 +521,13 @@ $(document).on('click', '.btn-editar', function() {
     if(!validarTelefono()){ alert('Teléfono inválido. Deben ser 10 dígitos numéricos.'); return; }
     if(!validarFechaNacimiento()){ alert('Fecha de nacimiento inválida.'); return; }
     if(!validarPromedio()){ alert('Promedio inválido. Usa un valor entre 6.0 y 10.0'); return; }
-    if(!validarNombreEscuela()){ alert('Nombre de la escuela inválido.'); return; } // <-- AQUÍ ESTÁ
+    if(!validarNombreEscuela()){ alert('Nombre de la escuela inválido.'); return; }
+    
+    // --- NUEVO: Validamos cuenta solo si estamos creando un alumno nuevo ---
+    if($('#accionCrud').val() === 'crear') {
+        if(!validarCorreo()){ alert('Correo inválido. Debe contener terminación @alumno.ipn.mx o @ipn.mx'); return; }
+        if(!validarContra()){ alert('La contraseña debe contener al menos una mayúscula, una minúscula, un dígito y un carácter especial.'); return; }
+    }
     
     $.ajax({
         url: '../docs/php/crud_guardar.php',
