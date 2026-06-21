@@ -2,6 +2,39 @@
 require('fpdf/fpdf.php'); 
 require_once('connection.php');
 
+class PDF extends FPDF {
+    function Header() {
+        if(file_exists('../img/logo-ipn-guinda.png')) {
+            $this->Image('../img/logo-ipn-guinda.png', 10, 8, 25); 
+        }
+        if(file_exists('../img/logoEscom.png')) {
+            $this->Image('../img/logoEscom.png', 168, 13, 35); 
+        }
+        
+        $this->SetFont('times', 'B', 16);
+        $this->SetTextColor(91,18,55);
+        $this->Cell(0, 10, utf8_decode('Instituto Politécnico Nacional'), 0, 1, 'C');
+        $this->SetTextColor(52,50,84);
+        $this->Cell(0, 10, utf8_decode('Escuela Superior de Cómputo'), 0, 1, 'C');
+        $this->Ln(5);
+        $this->SetFont('times', 'B', 14);
+        $this->SetTextColor(0,0,0);
+        $this->Cell(0, 10, utf8_decode('Acuse de Registro y Asignación de Examen'), 0, 1, 'C');
+        $this->Ln(20);
+    }
+
+    function Footer() {
+        $this->SetY(-25);
+        $this->SetFont('times', 'I', 10);
+        $this->MultiCell(0, 6, utf8_decode('Nota: Por favor, preséntate 10 minutos antes de tu horario asignado con una identificación oficial. Este documento es tu comprobante oficial de registro.'));
+
+        $this->SetY(-15);
+        $this->SetFont('times','b','8');
+        $this->SetTextColor(0,0,0);
+        $this->Cell(0,15,utf8_decode('Página ').$this->PageNo().'/{nb}',0,0,'C');
+    }
+}
+
 if(!isset($_GET['boleta']) || empty($_GET['boleta'])){
     die("Error: No se especificó una boleta.");
 }
@@ -31,30 +64,13 @@ if(mysqli_num_rows($resultado) === 0){
 
 $datos = mysqli_fetch_assoc($resultado);
 
-$pdf = new FPDF();
+$pdf = new PDF();
 $pdf->AddPage();
 
-// --- HEADER ---
-// Image(archivo, x, y, ancho)
-if(file_exists('../img/logo-ipn-guinda.png')) {
-    $pdf->Image('../img/logo-ipn-guinda.png', 10, 10, 25); 
-}
-if(file_exists('../img/logoEscom.png')) {
-    $pdf->Image('../img/logoEscom.png', 175, 10, 25); 
-}
-
-// Título
-$pdf->SetFont('Arial', 'B', 16);
-$pdf->Cell(0, 10, utf8_decode('Instituto Politécnico Nacional'), 0, 1, 'C');
-$pdf->Cell(0, 10, utf8_decode('Escuela Superior de Cómputo'), 0, 1, 'C');
-$pdf->Ln(5);
-$pdf->SetFont('Arial', 'B', 14);
-$pdf->Cell(0, 10, utf8_decode('Acuse de Registro y Asignación de Examen'), 0, 1, 'C');
-$pdf->Ln(10);
+$pdf->AliasNBPages();
 
 // --- DATOS DEL ALUMNO ---
 $pdf->SetFont('Arial', '', 12);
-// Función auxiliar para imprimir filas de datos
 function imprimirFila($pdf, $etiqueta, $valor) {
     $pdf->SetFont('Arial', 'B', 12);
     $pdf->Cell(50, 8, utf8_decode($etiqueta), 0, 0);
@@ -74,32 +90,34 @@ imprimirFila($pdf, 'Entidad:', $datos['ent_pro']);
 imprimirFila($pdf, 'Esc. Procedencia:', $datos['esc_pro']);
 imprimirFila($pdf, 'Promedio:', $datos['prom']);
 
-$pdf->Ln(10);
+$pdf->Ln(20);
 
-// --- DATOS DE ASIGNACIÓN (RESALTADOS) ---
-// Cambiamos el color de texto a un Guinda IPN (RGB: 104, 36, 68) o Azul ESCOM
-$pdf->SetTextColor(104, 36, 68); 
-$pdf->SetFont('Arial', 'B', 14);
+// --- DATOS DE ASIGNACIÓN ---
+$pdf->SetTextColor(104, 36, 68); // Color Guinda
+$pdf->SetFont('times', 'B', 14);
 $pdf->Cell(0, 10, utf8_decode('Detalles de tu Examen Diagnóstico:'), 0, 1, 'L');
 
+// Definir colores y fuente para la tabla
+$pdf->SetFillColor(240, 240, 240); 
+$pdf->SetTextColor(0, 0, 0);       
 $pdf->SetFont('Arial', 'B', 12);
-$pdf->Cell(50, 8, utf8_decode('Laboratorio Asignado:'), 0, 0);
-$pdf->Cell(0, 8, utf8_decode($datos['laboratorio']), 0, 1);
+$pdf->Ln(5); 
 
-$pdf->Cell(50, 8, utf8_decode('Horario:'), 0, 0);
-$horarioTexto = $datos['hora_ini'] . ' hrs a ' . $datos['hora_fin'] . ' hrs';
-$pdf->Cell(0, 8, utf8_decode($horarioTexto), 0, 1);
+// Encabezados de la tabla
+$pdf->Cell(95, 10, utf8_decode('Laboratorio'), 1, 0, 'C', true);
+$pdf->Cell(95, 10, utf8_decode('Horario'), 1, 1, 'C', true);
 
-// Restaurar color a negro por si agregas más texto después
-$pdf->SetTextColor(0, 0, 0); 
-$pdf->Ln(15);
+// Contenido de la tabla
+$pdf->SetFont('Arial', '', 12);
+$pdf->Cell(95, 10, utf8_decode($datos['laboratorio']), 1, 0, 'C');
+$horarioTexto = $datos['hora_ini'] . ' a ' . $datos['hora_fin'] . ' hrs';
+$pdf->Cell(95, 10, utf8_decode($horarioTexto), 1, 1, 'C');
 
-$pdf->SetFont('Arial', 'I', 10);
-$pdf->MultiCell(0, 6, utf8_decode('Nota: Por favor, preséntate 10 minutos antes de tu horario asignado con una identificación oficial. Este documento es tu comprobante oficial de registro.'));
 
-// Generar PDF y mostrarlo en el navegador
+
+
+// Generar PDF
 $pdf->Output('I', 'Acuse_Registro_'.$boleta.'.pdf');
 
-// Cerrar conexión
 mysqli_close($conexion);
 ?>
