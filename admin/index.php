@@ -176,10 +176,7 @@
                             </div>
                         </div>
 
-                        <div class="bg-light p-3 rounded border d-flex flex-column align-items-center mt-4">
-                            <p class="small text-muted mb-2">Resuelve el Captcha obligatorio para efectuar transacciones CRUD:</p>
-                            <div class="g-recaptcha" data-sitekey="6LeeNyktAAAAAExUm6WtHBTq70bQUfh_Jv-2u9sn"></div>
-                        </div>
+        
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-institucional-outline text-uppercase fw-bold" data-bs-dismiss="modal">Cerrar</button>
@@ -275,17 +272,6 @@
             }
         });
     })();
-    </script>
-
-    <script>
-        $(document).ready(function() {
-            $('#frmCrudAlumno').submit(function(e) {
-                if(grecaptcha.getResponse().length === 0) {
-                    e.preventDefault();
-                    alert("Por favor, completa el CAPTCHA de seguridad para ejecutar la operación en la BD.");
-                }
-            });
-        });
     </script>
 </body>
 
