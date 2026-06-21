@@ -11,10 +11,10 @@ $secretKey = "6LeeNyktAAAAAOOphIqMJeqVKh1C9_QXMTSpx5Hw";
 
 $captcha = $_POST['g-recaptcha-response'] ?? '';
 
-// if(empty($captcha)){
-//     echo "Error: Por favor completa el Captcha.";
-//     exit; // Usamos exit para detener el script aquí
-// }
+if(empty($captcha)){
+    echo "Error: Por favor completa el Captcha.";
+    exit; // Usamos exit para detener el script aquí
+}
 
 $url = "https://www.google.com/recaptcha/api/siteverify";
 
@@ -38,10 +38,10 @@ $result = file_get_contents($url,false,$context);
 
 $verify = json_decode($result);
 
-// if(!$verify->success){
-//     echo "Error: Captcha inválido. Intenta de nuevo.";
-//     exit;
-// }
+if(!$verify->success){
+    echo "Error: Captcha inválido. Intenta de nuevo.";
+    exit;
+}
 
 /* ======================
    LOGIN
