@@ -16,13 +16,13 @@ $(document).ready(function () {
             type:"POST",
             data: $("#frmLogin").serialize(),
 
-            success:function(res){
-
+            success:function(respuesta){
+                let res = respuesta.trim();
                 if(res == "0"){
-                    window.location.href = "./alumno/";
+                    window.location.href = "./alumno/index.php";
 
                 }else if(res == "1"){
-                    window.location.href = "./admin/";
+                    window.location.href = "./admin/index.php";
 
                 }else{
                     alert(res);

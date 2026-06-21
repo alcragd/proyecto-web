@@ -704,3 +704,25 @@ footer.footer-institucional {
         font-size: 0.62rem;
     }
 }
+/* ============================================================
+   Componentes Adicionales para Secciones Operativas
+   ============================================================ */
+.ticket-examen {
+    border-left: 6px solid var(--escom-blue);
+    background-color: #fcfcfc;
+    border-radius: 8px;
+}
+.ticket-label {
+    font-size: 0.85rem;
+    color: var(--text-mid);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 2px;
+}
+.ticket-data {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--ipn-guinda);
+    margin-bottom: 15px;
+}

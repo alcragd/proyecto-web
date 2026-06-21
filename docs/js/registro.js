@@ -52,9 +52,9 @@ $(document).ready(function () {
 					$('#formRegistro')[0].reset();
                 	$('#resumenRegistro').addClass('d-none');
 
-					let boletaUsuario = $('#boleta').val();
+					// let boletaUsuario = $('#boleta').val();
 
-					window.open('docs/php/generar_acuse.php?boleta=' + boletaUsuario, '_blank');
+					// window.open('docs/php/generar_acuse.php?boleta=' + boletaUsuario, '_blank');
 				}
 				else {
 					alert(respuesta);
