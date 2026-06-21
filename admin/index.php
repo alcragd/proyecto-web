@@ -6,6 +6,7 @@
         header("Location: ../login.php");
         exit;
     }
+    require_once("../docs/php/connection.php");
 ?>
 
 <!DOCTYPE html>
@@ -93,7 +94,7 @@
                 <div class="card mb-4 shadow-sm border-0" style="border-top: 4px solid var(--ipn-guinda) !important;">
                     <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center flex-wrap gap-2">
                         <h4 class="mb-0 text-guinda fw-bold"><i class="bi bi-sliders me-2"></i>Consola Administrativa (Operaciones CRUD)</h4>
-                        <button class="btn btn-institucional btn-sm shadow-sm text-uppercase fw-bold" data-bs-toggle="modal" data-bs-target="#modalCrudAlumno" style="background-color: var(--ipn-guinda); color: white;">
+                        <button class="btn btn-institucional btn-sm shadow-sm text-uppercase fw-bold" id="btnNuevoAlumno" data-bs-toggle="modal" data-bs-target="#modalCrudAlumno" style="background-color: var(--ipn-guinda); color: white;">
                             <i class="bi bi-plus-circle me-1"></i> Registrar Alumno
                         </button>
                     </div>
@@ -113,18 +114,7 @@
                                     </tr>
                                 </thead>
                                 <tbody id="tbodyAlumnos">
-                                    <tr>
-                                        <td class="fw-bold">2026630015</td>
-                                        <td>Isaac Christian</td>
-                                        <td>CECyT 9 "Juan de Dios Bátiz"</td>
-                                        <td>9.45</td>
-                                        <td>Laboratorio 3</td>
-                                        <td>09:45 - 11:15</td>
-                                        <td>
-                                            <button class="btn btn-sm btn-outline-secondary me-1" data-bs-toggle="modal" data-bs-target="#modalCrudAlumno" title="Editar"><i class="bi bi-pencil-square"></i></button>
-                                            <button class="btn btn-sm btn-outline-danger" title="Eliminar"><i class="bi bi-trash3"></i></button>
-                                        </td>
-                                    </tr>
+                                   
                                 </tbody>
                             </table>
                         </div>
@@ -143,46 +133,168 @@
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <form id="frmCrudAlumno">
-                    <div class="modal-body p-4">
-                        <div class="row g-3">
-                            <div class="col-md-4">
-                                <label class="form-label fw-semibold">No. de Boleta</label>
-                                <input type="text" class="form-control" name="boleta" required placeholder="Ej: 2026630000">
-                            </div>
-                            <div class="col-md-8">
-                                <label class="form-label fw-semibold">Nombre(s)</label>
-                                <input type="text" class="form-control" name="nombre" required placeholder="Nombre completo o descriptivo">
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label fw-semibold">Laboratorio Asignado</label>
-                                <select class="form-select" name="laboratorio" required>
-                                    <option value="" disabled selected>Selecciona una opción...</option>
-                                    <option value="1">Laboratorio 1</option>
-                                    <option value="2">Laboratorio 2</option>
-                                    <option value="3">Laboratorio 3</option>
-                                    <option value="4">Laboratorio 4</option>
-                                    <option value="5">Laboratorio 5</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label fw-semibold">Horario Reasignado</label>
-                                <select class="form-select" name="horario" required>
-                                    <option value="" disabled selected>Selecciona una opción...</option>
-                                    <option value="1">08:00 - 09:30</option>
-                                    <option value="2">09:45 - 11:15</option>
-                                    <option value="3">11:30 - 13:00</option>
-                                    <option value="4">13:15 - 14:45</option>
-                                </select>
-                            </div>
-                        </div>
+    <input type="hidden" id="accionCrud" name="accion" value="crear">
 
-        
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-institucional-outline text-uppercase fw-bold" data-bs-dismiss="modal">Cerrar</button>
-                        <button type="submit" class="btn btn-institucional text-uppercase fw-bold" style="background-color: var(--ipn-guinda); color: white;">Guardar Cambios</button>
-                    </div>
-                </form>
+    <div class="modal-body p-4">
+        <h6 class="text-guinda fw-bold mb-3"><i class="bi bi-person-badge-fill me-2"></i>Identificación del Aspirante</h6>
+        <div class="row g-3 mb-4">
+            <div class="col-md-4">
+                <label for="boleta" class="form-label fw-semibold text-muted">No. de Boleta</label>
+                <input type="text" class="form-control" name="boleta" id="boleta" required maxlength="10">
+            </div>
+            <div class="col-md-4">
+                <label for="nombre" class="form-label fw-semibold text-muted">Nombre(s)</label>
+                <input type="text" class="form-control" name="nombre" id="nombre" required>
+            </div>
+            <div class="col-md-4">
+                <label for="appat" class="form-label fw-semibold text-muted">Apellido Paterno</label>
+                <input type="text" class="form-control" name="pat" id="appat" required>
+            </div>
+            <div class="col-md-4">
+                <label for="apmat" class="form-label fw-semibold text-muted">Apellido Materno</label>
+                <input type="text" class="form-control" name="mat" id="apmat" required>
+            </div>
+            <div class="col-md-4">
+                <label for="curp" class="form-label fw-semibold text-muted">CURP</label>
+                <input type="text" class="form-control" name="curp" id="curp" required maxlength="18" style="text-transform: uppercase;">
+            </div>
+            <div class="col-md-4">
+                <label for="telefono" class="form-label fw-semibold text-muted">Teléfono</label>
+                <input type="tel" class="form-control" name="tel" id="telefono" required maxlength="10">
+            </div>
+        </div>
+
+        <h6 class="text-guinda fw-bold mb-3"><i class="bi bi-geo-alt-fill me-2"></i>Información Personal y Procedencia</h6>
+        <div class="row g-3 mb-4">
+            <div class="col-md-4">
+                <label for="fechaNacimiento" class="form-label fw-semibold text-muted">Fecha de Nacimiento</label>
+                <input type="date" class="form-control" name="fecha_nac" id="fechaNacimiento" required>
+            </div>
+            <div class="col-md-4">
+                <label for="genero" class="form-label fw-semibold text-muted">Género</label>
+                <select class="form-select" name="genero" id="genero" required>
+                    <option value="" disabled selected>Selecciona...</option>
+                    <option value="S/A">Sin Asignar (S/A)</option>
+                    <option value="Masculino">Masculino</option>
+                    <option value="Femenino">Femenino</option>
+                    <option value="Otro">Otro</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label for="entidadFederativa" class="form-label fw-semibold text-muted">Entidad Federativa</label>
+                <select class="form-select" name="ent_pro" id="entidadFederativa" required>
+                    <option value="" selected disabled>Selecciona un estado...</option>
+                    <option value="Aguascalientes">Aguascalientes</option>
+                    <option value="Baja California">Baja California</option>
+                    <option value="Baja California Sur">Baja California Sur</option>
+                    <option value="Campeche">Campeche</option>
+                    <option value="Chiapas">Chiapas</option>
+                    <option value="Chihuahua">Chihuahua</option>
+                    <option value="Ciudad de México">Ciudad de México</option>
+                    <option value="Coahuila">Coahuila</option>
+                    <option value="Colima">Colima</option>
+                    <option value="Durango">Durango</option>
+                    <option value="Estado de México">Estado de México</option>
+                    <option value="Guanajuato">Guanajuato</option>
+                    <option value="Guerrero">Guerrero</option>
+                    <option value="Hidalgo">Hidalgo</option>
+                    <option value="Jalisco">Jalisco</option>
+                    <option value="Michoacán">Michoacán</option>
+                    <option value="Morelos">Morelos</option>
+                    <option value="Nayarit">Nayarit</option>
+                    <option value="Nuevo León">Nuevo León</option>
+                    <option value="Oaxaca">Oaxaca</option>
+                    <option value="Puebla">Puebla</option>
+                    <option value="Querétaro">Querétaro</option>
+                    <option value="Quintana Roo">Quintana Roo</option>
+                    <option value="San Luis Potosí">San Luis Potosí</option>
+                    <option value="Sinaloa">Sinaloa</option>
+                    <option value="Sonora">Sonora</option>
+                    <option value="Tabasco">Tabasco</option>
+                    <option value="Tamaulipas">Tamaulipas</option>
+                    <option value="Tlaxcala">Tlaxcala</option>
+                    <option value="Veracruz">Veracruz</option>
+                    <option value="Yucatán">Yucatán</option>
+                    <option value="Zacatecas">Zacatecas</option>
+                </select>
+            </div>
+
+            <div class="col-md-4">
+                <label for="escuelaProcedencia" class="form-label fw-semibold text-muted">Escuela de Procedencia</label>
+                <select class="form-select" name="esc_pro" id="escuelaProcedencia" required>
+                    <option value="" selected disabled>Selecciona...</option>
+                    <option value="CECyT 1">CECyT 1 "Gonzalo Vázquez Vela"</option>
+                    <option value="CECyT 2">CECyT 2 "Miguel Bernard"</option>
+                    <option value="CECyT 3">CECyT 3 "Estanislao Ramírez Ruiz"</option>
+                    <option value="CECyT 4">CECyT 4 "Lázaro Cárdenas"</option>
+                    <option value="CECyT 5">CECyT 5 "Benito Juárez"</option>
+                    <option value="CECyT 6">CECyT 6 "Miguel Othón de Mendizábal"</option>
+                    <option value="CECyT 7">CECyT 7 "Cuauhtémoc"</option>
+                    <option value="CECyT 8">CECyT 8 "Narciso Bassols"</option>
+                    <option value="CECyT 9">CECyT 9 "Juan de Dios Bátiz"</option>
+                    <option value="CECyT 10">CECyT 10 "Carlos Vallejo Márquez"</option>
+                    <option value="CECyT 11">CECyT 11 "Wilfrido Massieu"</option>
+                    <option value="CECyT 12">CECyT 12 "José María Morelos"</option>
+                    <option value="CECyT 13">CECyT 13 "Ricardo Flores Magón"</option>
+                    <option value="CECyT 14">CECyT 14 "Luis Enrique Erro"</option>
+                    <option value="CECyT 15">CECyT 15 "Diódoro Antúnez Echegaray"</option>
+                    <option value="CECyT 16">CECyT 16 "Hidalgo"</option>
+                    <option value="CECyT 17">CECyT 17 "León, Guanajuato"</option>
+                    <option value="CECyT 18">CECyT 18 "Zacatecas"</option>
+                    <option value="CECyT 19">CECyT 19 "Leona Vicario"</option>
+                    <option value="CECyT 20">CECyT 20 "Natalia Serdán Alatriste"</option>
+                    <option value="CET 1">CET 1 "Walter Cross Buchanan"</option>
+                    <option value="Otro">Otro (Especificar)</option>
+                </select>
+            </div>
+            <div class="col-md-5">
+                <label for="nombreEscuela" class="form-label fw-semibold text-muted">Nombre (si es "Otro")</label>
+                <input type="text" class="form-control" id="nombreEscuela" name="nombreEscuela" disabled placeholder="Especificar escuela">
+            </div>
+            <div class="col-md-3">
+                <label for="promedio" class="form-label fw-semibold text-muted">Promedio</label>
+                <input type="number" step="0.01" class="form-control" name="prom" id="promedio" required min="6" max="10">
+            </div>
+        </div>
+
+        <h6 class="text-guinda fw-bold mb-3"><i class="bi bi-calendar-check-fill me-2"></i>Asignación de Examen Diagnóstico</h6>
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label for="laboratorio" class="form-label fw-semibold text-muted">Laboratorio Destino</label>
+                <select class="form-select" name="laboratorio" id="laboratorio" required>
+                    <option value="" disabled selected>Selecciona laboratorio...</option>
+                    <?php
+                        $queryLab = "SELECT * FROM laboratorio";
+                        $resLab = mysqli_query($conexion, $queryLab);
+                        while($lab = mysqli_fetch_assoc($resLab)) {
+                            echo "<option value='".$lab['id_lab']."'>".$lab['nombre']."</option>";
+                        }
+                    ?>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label for="horario" class="form-label fw-semibold text-muted">Horario Asignado</label>
+                <select class="form-select" name="horario" id="horario" required>
+                    <option value="" disabled selected>Selecciona bloque...</option>
+                    <?php
+                        $queryHor = "SELECT * FROM horarios";
+                        $resHor = mysqli_query($conexion, $queryHor);
+                        while($hor = mysqli_fetch_assoc($resHor)) {
+                            $inicio = substr($hor['hora_ini'], 0, 5);
+                            $fin = substr($hor['hora_fin'], 0, 5);
+                            echo "<option value='".$hor['id_horario']."'>".$inicio." - ".$fin." hrs</option>";
+                        }
+                    ?>
+                </select>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal-footer">
+        <button type="button" class="btn btn-institucional-outline text-uppercase fw-bold" data-bs-dismiss="modal">Cerrar</button>
+        <button type="submit" class="btn btn-institucional text-uppercase fw-bold" style="background-color: var(--ipn-guinda); color: white;">Guardar Cambios</button>
+    </div>
+</form>
             </div>
         </div>
     </div>
@@ -256,7 +368,7 @@
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="../docs/js/validaciones.js"></script>
     
     <script>
     (function () {
@@ -273,6 +385,144 @@
         });
     })();
     </script>
+
+    <script>
+    $(document).ready(function() {
+        
+        // 1. READ: Cargar la tabla al entrar a la página
+        function cargarTabla() {
+            $.ajax({
+                url: '../docs/php/crud_leer.php',
+                type: 'GET',
+                success: function(respuesta) {
+                    $('#tbodyAlumnos').html(respuesta);
+                }
+            });
+        }
+        cargarTabla(); // Ejecutamos la función apenas cargue la página
+
+       // --- NUEVO: EVENTO PARA HABILITAR/DESHABILITAR EL CAMPO DE "OTRO" ---
+$('#escuelaProcedencia').change(function() {
+    if($(this).val() === 'Otro') {
+        $('#nombreEscuela').prop('disabled', false).prop('required', true);
+    } else {
+        $('#nombreEscuela').prop('disabled', true).prop('required', false).val('');
+    }
+});
+
+// 2. PREPARAR CREATE: Botón superior para registrar nuevo
+$('#btnNuevoAlumno').click(function() {
+    $('#frmCrudAlumno')[0].reset();
+    $('#accionCrud').val('crear');
+    $('input[name="boleta"]').prop('readonly', false);
+    $('#nombreEscuela').prop('disabled', true); // Aseguramos que inicie bloqueado
+    $('.modal-title').html('<i class="bi bi-person-plus me-2"></i>Registrar Nuevo Alumno');
+});
+
+// 3. PREPARAR UPDATE: Botón de editar en la tabla
+$(document).on('click', '.btn-editar', function() {
+    let boleta = $(this).data('boleta');
+    
+    $('#frmCrudAlumno')[0].reset();
+    $('#accionCrud').val('editar');
+    $('input[name="boleta"]').prop('readonly', true);
+    $('.modal-title').html('<i class="bi bi-pencil-square me-2"></i>Actualizar Expediente Completo');
+
+    $.ajax({
+        url: '../docs/php/crud_obtener.php',
+        type: 'POST',
+        data: { boleta: boleta },
+        dataType: 'json', 
+        success: function(datos) {
+            if(!datos.error) {
+                $('input[name="boleta"]').val(datos.boleta);
+                $('input[name="nombre"]').val(datos.nombre);
+                $('input[name="pat"]').val(datos.pat);
+                $('input[name="mat"]').val(datos.mat);
+                $('input[name="curp"]').val(datos.curp);
+                $('input[name="tel"]').val(datos.tel);
+                $('input[name="fecha_nac"]').val(datos.fecha_nac);
+                $('select[name="genero"]').val(datos.gen);
+                $('select[name="ent_pro"]').val(datos.ent_pro);
+                $('input[name="prom"]').val(datos.prom);
+                
+                // --- NUEVO: LÓGICA INTELIGENTE PARA LA ESCUELA ---
+                if ($('#escuelaProcedencia option[value="' + datos.esc_pro + '"]').length > 0) {
+                    $('#escuelaProcedencia').val(datos.esc_pro);
+                    $('#nombreEscuela').prop('disabled', true).val('');
+                } else {
+                    // Si no existe, seleccionamos "Otro" y escribimos la escuela en el input
+                    $('#escuelaProcedencia').val('Otro');
+                    $('#nombreEscuela').prop('disabled', false).val(datos.esc_pro);
+                }
+                // ------------------------------------------------
+
+                if(datos.id_lab) $('select[name="laboratorio"]').val(datos.id_lab);
+                if(datos.id_horario) $('select[name="horario"]').val(datos.id_horario);
+            } else {
+                alert(datos.error);
+            }
+        }
+    });
+});
+
+        // 4. DELETE: Botón de eliminar en la tabla
+        $(document).on('click', '.btn-eliminar', function() {
+            let boleta = $(this).data('boleta');
+            
+            if(confirm('¿Estás seguro de eliminar la boleta ' + boleta + '? Se borrará su cuenta y asignación de examen.')) {
+                $.ajax({
+                    url: '../docs/php/crud_eliminar.php',
+                    type: 'POST',
+                    data: { boleta: boleta },
+                    success: function(respuesta) {
+                        if(respuesta.trim() === "success") {
+                            alert('Registro eliminado correctamente.');
+                            cargarTabla();
+                        } else {
+                            alert(respuesta);
+                        }
+                    }
+                });
+            }
+        });
+
+        // 5. CREATE / UPDATE: Botón de Guardar en el Modal
+        $('#frmCrudAlumno').submit(function(e) {
+        e.preventDefault();
+    
+    // Reutilizamos todas las validaciones (¡Ahora sí incluimos validarNombreEscuela!)
+    if(!validarBoleta()){ alert('Boleta inválida. Debe tener 10 dígitos o formato PE/PP.'); return; }
+    if(!validarNombre()){ alert('Nombre inválido. Solo usa letras.'); return; }
+    if(!validarApellidoPaterno()){ alert('Apellido paterno inválido.'); return; }
+    if(!validarApellidoMaterno()){ alert('Apellido materno inválido.'); return; }
+    if(!validarCurp()){ alert('CURP inválida. Revisa el formato de 18 caracteres.'); return; }
+    if(!validarTelefono()){ alert('Teléfono inválido. Deben ser 10 dígitos numéricos.'); return; }
+    if(!validarFechaNacimiento()){ alert('Fecha de nacimiento inválida.'); return; }
+    if(!validarPromedio()){ alert('Promedio inválido. Usa un valor entre 6.0 y 10.0'); return; }
+    if(!validarNombreEscuela()){ alert('Nombre de la escuela inválido.'); return; } // <-- AQUÍ ESTÁ
+    
+    $.ajax({
+        url: '../docs/php/crud_guardar.php',
+        type: 'POST',
+        data: $(this).serialize(),
+        success: function(respuesta) {
+            if(respuesta.trim() === "success") {
+                alert('Operación realizada con éxito en la base de datos.');
+                $('#modalCrudAlumno').modal('hide');
+                cargarTabla();
+            } else {
+                alert(respuesta);
+            }
+        },
+        error: function() {
+            alert("Error al conectar con el servidor.");
+        }
+    });
+    });
+});
+</script>
 </body>
 
 </html>
+<?php mysqli_close($conexion); ?>

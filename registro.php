@@ -164,8 +164,8 @@ if(isset($_SESSION["usuario"])){
                                 <label for="genero" class="form-label fw-semibold">Género</label>
                                 <select class="form-select" id="genero" name="genero" required>
                                     <option value="" selected disabled>Selecciona una opción...</option>
-                                    <option value="Mujer">Mujer</option>
-                                    <option value="Hombre">Hombre</option>
+                                    <option value="Femenino">Femenino</option>
+                                    <option value="Masculino">Masculino</option>
                                     <option value="Otro">Otro</option>
                                 </select>
                             </div>
@@ -248,6 +248,7 @@ if(isset($_SESSION["usuario"])){
                                     <option value="CECyT 17">CECyT 17 "León, Guanajuato"</option>
                                     <option value="CECyT 18">CECyT 18 "Zacatecas"</option>
                                     <option value="CECyT 19">CECyT 19 "Leona Vicario"</option>
+                                    <option value="CECyT 20">CECyT 20 "Natalia Serdán Alatriste"</option>
                                     <option value="CET 1">CET 1 "Walter Cross Buchanan"</option>
                                     <option value="Otro">Otro (Especificar)</option>
                                 </select>
