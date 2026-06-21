@@ -2,7 +2,7 @@
 require_once("connection.php");
 $id_lab = $_POST['id_lab'] ?? 0;
 $boleta = $_POST['boleta'] ?? '';
-$max_cupos = 30; // <- Mismo límite que arriba
+$max_cupos = 30; 
 
 // Busca horarios disponibles específicamente para el laboratorio seleccionado
 $query = "SELECT h.id_horario, h.hora_ini, h.hora_fin 
