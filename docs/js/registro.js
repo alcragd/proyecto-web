@@ -51,6 +51,10 @@ $(document).ready(function () {
 					confirmRegistro(); 
 					$('#formRegistro')[0].reset();
                 	$('#resumenRegistro').addClass('d-none');
+
+					let boletaUsuario = $('#boleta').val();
+
+					window.open('docs/php/generar_acuse.php?boleta=' + boletaUsuario, '_blank');
 				}
 				else {
 					alert(respuesta);
