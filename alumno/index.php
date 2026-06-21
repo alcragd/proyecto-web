@@ -2,10 +2,10 @@
     session_start();
 
     // Validación de sesión activa y rol de alumno (0)
-    /*if(!isset($_SESSION["usuario"]) || $_SESSION["rol"] != "0"){
+    if(!isset($_SESSION["usuario"]) || $_SESSION["rol"] != "0"){
         header("Location: ../login.html");
         exit;
-    }*/
+    }
 ?>
 
 <!DOCTYPE html>
@@ -131,7 +131,7 @@
                                         <div class="g-recaptcha" data-sitekey="6LeeNyktAAAAAExUm6WtHBTq70bQUfh_Jv-2u9sn"></div>
                                     </div>
                                     
-                                    <button type="submit" class="btn btn-institucional btn-lg w-100" style="max-width: 300px;">
+                                    <button type="submit" class="btn btn-institucional btn-lg w-100" style="max-width: 300px;" onclick="window.open('../docs/php/generar_acuse.php?boleta=<?php echo $_SESSION['boleta']; ?>', '_blank')">
                                         <i class="bi bi-file-earmark-pdf-fill me-2"></i> Imprimir Acuse
                                     </button>
                                 </form>

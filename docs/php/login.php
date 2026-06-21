@@ -78,6 +78,26 @@ if(mysqli_num_rows($resultado) > 0){
         $_SESSION['usuario'] = $datos['correo'];
         $_SESSION['rol'] = $datos['rol'];
 
+        if($datos['rol'] == 0){
+            $stmtAlumno = mysqli_prepare(
+                $conexion,
+                "SELECT boleta FROM alumnos WHERE id_usuario = ?"
+            );
+            
+            mysqli_stmt_bind_param(
+                $stmtAlumno, 
+                "i", 
+                $datos['id_usuario']
+            );
+            
+            mysqli_stmt_execute($stmtAlumno);
+            $resAlumno = mysqli_stmt_get_result($stmtAlumno);
+            
+            if($filaAlumno = mysqli_fetch_assoc($resAlumno)){  
+                $_SESSION['boleta'] = $filaAlumno['boleta'];
+            }
+        }
+
         echo $datos['rol'];
 
     }else{
