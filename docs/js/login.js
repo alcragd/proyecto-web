@@ -6,10 +6,10 @@ $(document).ready(function () {
 
         let captcha = grecaptcha.getResponse();
 
-        // if(captcha.length === 0){
-        //     alert("Completa el captcha");
-        //     return;
-        // }
+        if(captcha.length === 0){
+            alert("Completa el captcha");
+            return;
+        }
 
         $.ajax({
             url:"docs/php/login.php",
