@@ -2,13 +2,12 @@
 // Incluimos tu archivo de conexión original
 require_once("connection.php");
 
-// 1. Define aquí las credenciales que tendrá tu Administrador para las pruebas
+/
 $correo_admin = "admin@ipn.mx"; 
-$contrasena_plana = "Admin_123"; // Contraseña en texto plano que escribirás en el login
-$rol_admin = 1; // Asignamos el rol 1 que corresponde a Admin en tu sistema
+$contrasena_plana = "Admin_123"; 
+$rol_admin = 1; 
 
-// 2. Hasheamos la contraseña de manera segura utilizando el algoritmo nativo de PHP
-// Esto generará la cadena de 60 caracteres necesaria para que password_verify() funcione en tu login
+
 $contrasena_hasheada = password_hash($contrasena_plana, PASSWORD_DEFAULT);
 
 // 3. Preparamos la consulta segura para insertar los datos en tu tabla 'usuarios'
