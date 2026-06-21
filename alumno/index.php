@@ -103,14 +103,6 @@
                             
                             <div class="ticket-examen p-4 mb-4 shadow-sm">
                                 <div class="row text-center text-md-start">
-                                    <div class="col-12 col-md-6 mb-3">
-                                        <div class="ticket-label">Cuenta de Usuario</div>
-                                        <div class="ticket-data"><?= $_SESSION["usuario"] ?></div>
-                                    </div>
-                                    <div class="col-12 col-md-6 mb-3">
-                                        <div class="ticket-label">Estatus</div>
-                                        <div class="ticket-data text-success">Registrado</div>
-                                    </div>
                                     <div class="row text-center text-md-start" id="contenedorDatosExamen">
                                     </div>
                                 </div>
