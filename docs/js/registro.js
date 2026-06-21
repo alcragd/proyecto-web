@@ -31,14 +31,24 @@ $(document).ready(function () {
 		
 		var msg = $(`
 			<div id="registroSuccess" class="alert alert-success mt-3">
-				<strong>Registro confirmado.</strong> Tus datos han sido registrados correctamente.
-				<br><br>
-				<a href="docs/php/generar_acuse.php?boleta=${boleta}" 
-				class="btn btn-institucional" 
-				target="_blank">
-				<i class="bi bi-file-earmark-pdf"></i> Imprimir Acuse
-				</a>
+				<strong>¡Éxito!</strong> Tus datos han sido procesados y registrados correctamente en el sistema.
 			</div>
+
+			<div id="bloqueAcuse" class="card border-0 shadow-sm p-4 mt-3 bg-light">
+				<h5 class="text-primary fw-bold mb-3"><i class="bi bi-file-earmark-pdf me-2"></i>Descarga tu acuse</h5>
+				
+				<p class="mb-3">
+					Puedes descargar tu acuse de registro en cualquier momento. 
+					Si lo necesitas más tarde, simplemente <strong>inicia sesión</strong> en nuestra plataforma 
+					utilizando tu correo institucional y tu contraseña.
+				</p>
+
+				<a href="docs/php/generar_acuse.php?boleta=${boleta}" 
+				class="btn btn-institucional w-100" 
+				target="_blank">
+				<i class="bi bi-download me-2"></i>Descargar Acuse PDF
+				</a>
+</div>
 		`);
 		
 		$('#resumenRegistro').before(msg);
@@ -50,20 +60,59 @@ $(document).ready(function () {
 	}
 
 
+	$('#confirmRegistro').click(function () {
+		let formData = $('#formRegistro').serialize();
+
+        // 2. Hacemos la petición AJAX hacia guardar.php
+        $.ajax({
+            url: "docs/php/registro.php",
+            type: "POST",
+            data: formData,
+            success: function(respuesta) {
+
+				if(respuesta == "Registro exitoso") {
+					confirmRegistro($('#boleta').val()); 
+					$('#formRegistro')[0].reset();
+                	$('#resumenRegistro').addClass('d-none');
+				}
+				else {
+					alert(respuesta);
+				}
+                
+            },
+            error: function() {
+                alert("Hubo un error al conectar con el servidor.");
+            }
+        });
+	});
+
+	$('#editarRegistro').click(function () {
+		$('#resumenRegistro').addClass('d-none');
+		$('#formRegistro').removeClass('d-none');
+	});
+
+	$('#formRegistro').submit(function (evt) {
+		evt.preventDefault();
+		if(!validarFormularioRegistro()) return; 
+
+
+
+		registro();
+	});
+
 	const anioActual = new Date().getFullYear();
     
     const anioMax = anioActual - 17;
     
     const anioMin = anioActual - 100;
 
-    const fechaMax = `${anioMax}-12-31`; // Hasta el último día del año permitido
-    const fechaMin = `${anioMin}-01-01`; // Desde el primer día del año permitido
+    const fechaMax = `${anioMax}-12-31`; 
+    const fechaMin = `${anioMin}-01-01`;
 
-    // Aplicar al input
     const $inputFecha = $("#fechaNacimiento");
     $inputFecha.attr("max", fechaMax);
     $inputFecha.attr("min", fechaMin);
-    
+
 
 });
 
