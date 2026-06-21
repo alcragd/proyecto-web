@@ -50,45 +50,20 @@ $(document).ready(function () {
 	}
 
 
-	$('#confirmRegistro').click(function () {
-		let formData = $('#formRegistro').serialize();
+	const anioActual = new Date().getFullYear();
+    
+    const anioMax = anioActual - 17;
+    
+    const anioMin = anioActual - 100;
 
-        // 2. Hacemos la petición AJAX hacia guardar.php
-        $.ajax({
-            url: "docs/php/registro.php",
-            type: "POST",
-            data: formData,
-            success: function(respuesta) {
+    const fechaMax = `${anioMax}-12-31`; // Hasta el último día del año permitido
+    const fechaMin = `${anioMin}-01-01`; // Desde el primer día del año permitido
 
-				if(respuesta == "Registro exitoso") {
-					confirmRegistro($('#boleta').val()); 
-					$('#formRegistro')[0].reset();
-                	$('#resumenRegistro').addClass('d-none');
-				}
-				else {
-					alert(respuesta);
-				}
-                
-            },
-            error: function() {
-                alert("Hubo un error al conectar con el servidor.");
-            }
-        });
-	});
-
-	$('#editarRegistro').click(function () {
-		$('#resumenRegistro').addClass('d-none');
-		$('#formRegistro').removeClass('d-none');
-	});
-
-	$('#formRegistro').submit(function (evt) {
-		evt.preventDefault();
-		if(!validarFormularioRegistro()) return; 
-
-
-
-		registro();
-	});
+    // Aplicar al input
+    const $inputFecha = $("#fechaNacimiento");
+    $inputFecha.attr("max", fechaMax);
+    $inputFecha.attr("min", fechaMin);
+    
 
 });
 
