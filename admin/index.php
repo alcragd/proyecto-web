@@ -262,29 +262,13 @@
             <div class="col-md-6">
                 <label for="laboratorio" class="form-label fw-semibold text-muted">Laboratorio Destino</label>
                 <select class="form-select" name="laboratorio" id="laboratorio" required>
-                    <option value="" disabled selected>Selecciona laboratorio...</option>
-                    <?php
-                        $queryLab = "SELECT * FROM laboratorio";
-                        $resLab = mysqli_query($conexion, $queryLab);
-                        while($lab = mysqli_fetch_assoc($resLab)) {
-                            echo "<option value='".$lab['id_lab']."'>".$lab['nombre']."</option>";
-                        }
-                    ?>
+                    
                 </select>
             </div>
             <div class="col-md-6">
                 <label for="horario" class="form-label fw-semibold text-muted">Horario Asignado</label>
                 <select class="form-select" name="horario" id="horario" required>
-                    <option value="" disabled selected>Selecciona bloque...</option>
-                    <?php
-                        $queryHor = "SELECT * FROM horarios";
-                        $resHor = mysqli_query($conexion, $queryHor);
-                        while($hor = mysqli_fetch_assoc($resHor)) {
-                            $inicio = substr($hor['hora_ini'], 0, 5);
-                            $fin = substr($hor['hora_fin'], 0, 5);
-                            echo "<option value='".$hor['id_horario']."'>".$inicio." - ".$fin." hrs</option>";
-                        }
-                    ?>
+                    
                 </select>
             </div>
         </div>
@@ -414,82 +398,122 @@
         }
         cargarTabla(); // Ejecutamos la función apenas cargue la página
 
-       // --- NUEVO: EVENTO PARA HABILITAR/DESHABILITAR EL CAMPO DE "OTRO" ---
-$('#escuelaProcedencia').change(function() {
-    if($(this).val() === 'Otro') {
-        $('#nombreEscuela').prop('disabled', false).prop('required', true);
-    } else {
-        $('#nombreEscuela').prop('disabled', true).prop('required', false).val('');
-    }
-});
-
-// 2. PREPARAR CREATE: Botón superior para registrar nuevo
-$('#btnNuevoAlumno').click(function() {
-    $('#frmCrudAlumno')[0].reset();
-    $('#accionCrud').val('crear');
-    $('input[name="boleta"]').prop('readonly', false);
-    $('#nombreEscuela').prop('disabled', true); 
-    
-    // Mostramos la sección de cuenta y hacemos obligatorios los campos
-    $('#seccionCuenta').show();
-    $('#correo, #contrasena').prop('required', true);
-    
-    $('.modal-title').html('<i class="bi bi-person-plus me-2"></i>Registrar Nuevo Alumno');
-});
-
-// 3. PREPARAR UPDATE: Botón de editar en la tabla
-$(document).on('click', '.btn-editar', function() {
-    let boleta = $(this).data('boleta');
-    
-    $('#frmCrudAlumno')[0].reset();
-    $('#accionCrud').val('editar');
-    $('input[name="boleta"]').prop('readonly', true);
-    
-    // Ocultamos la sección de cuenta y quitamos la obligatoriedad para que no marque error al guardar
-    $('#seccionCuenta').hide();
-    $('#correo, #contrasena').prop('required', false).val('');
-    
-    $('.modal-title').html('<i class="bi bi-pencil-square me-2"></i>Actualizar Expediente Completo');
-
-    $.ajax({
-        url: '../docs/php/crud_obtener.php',
-        type: 'POST',
-        data: { boleta: boleta },
-        dataType: 'json', 
-        success: function(datos) {
-            if(!datos.error) {
-                $('input[name="boleta"]').val(datos.boleta);
-                $('input[name="nombre"]').val(datos.nombre);
-                $('input[name="pat"]').val(datos.pat);
-                $('input[name="mat"]').val(datos.mat);
-                $('input[name="curp"]').val(datos.curp);
-                $('input[name="tel"]').val(datos.tel);
-                $('input[name="fecha_nac"]').val(datos.fecha_nac);
-                $('select[name="genero"]').val(datos.gen);
-                $('select[name="ent_pro"]').val(datos.ent_pro);
-                $('input[name="prom"]').val(datos.prom);
-                
-                // --- NUEVO: LÓGICA INTELIGENTE PARA LA ESCUELA ---
-                if ($('#escuelaProcedencia option[value="' + datos.esc_pro + '"]').length > 0) {
-                    $('#escuelaProcedencia').val(datos.esc_pro);
-                    $('#nombreEscuela').prop('disabled', true).val('');
-                } else {
-                    // Si no existe, seleccionamos "Otro" y escribimos la escuela en el input
-                    $('#escuelaProcedencia').val('Otro');
-                    $('#nombreEscuela').prop('disabled', false).val(datos.esc_pro);
+// --- Combos Dinamicos
+        function cargarLaboratorios(boleta, idLabSeleccionado = null) {
+            $.ajax({
+                url: '../docs/php/lab_admin.php',
+                type: 'POST',
+                data: { boleta: boleta },
+                success: function(opcionesHTML) {
+                    $('#laboratorio').html('<option value="" disabled selected>Selecciona laboratorio</option>' + opcionesHTML);
+                    if(idLabSeleccionado) {
+                        $('#laboratorio').val(idLabSeleccionado);
+                    }
                 }
-                // ------------------------------------------------
-
-                if(datos.id_lab) $('select[name="laboratorio"]').val(datos.id_lab);
-                if(datos.id_horario) $('select[name="horario"]').val(datos.id_horario);
-            } else {
-                alert(datos.error);
-            }
+            });
         }
-    });
-});
 
-        // 4. DELETE: Botón de eliminar en la tabla
+        function cargarHorarios(id_lab, boleta, idHorarioSeleccionado = null) {
+            if(!id_lab) {
+                $('#horario').html('<option value="" disabled selected>Esperando laboratorio...</option>');
+                return;
+            }
+            $.ajax({
+                url: '../docs/php/horarios_admin.php',
+                type: 'POST',
+                data: { id_lab: id_lab, boleta: boleta },
+                success: function(opcionesHTML) {
+                    $('#horario').html('<option value="" disabled selected>Selecciona horario</option>' + opcionesHTML);
+                    if(idHorarioSeleccionado) {
+                        $('#horario').val(idHorarioSeleccionado);
+                    }
+                }
+            });
+        }
+
+        // EVENTOS DE LOS CAMPOS DINÁMICOS 
+        $('#escuelaProcedencia').change(function() {
+            if($(this).val() === 'Otro') {
+                $('#nombreEscuela').prop('disabled', false).prop('required', true);
+            } else {
+                $('#nombreEscuela').prop('disabled', true).prop('required', false).val('');
+            }
+        });
+
+        $('#laboratorio').change(function() {
+            let id_lab = $(this).val();
+            let boleta = $('#accionCrud').val() === 'editar' ? $('#boleta').val() : ''; 
+            cargarHorarios(id_lab, boleta, null);
+        });
+
+        // --- 3. BOTÓN NUEVO ALUMNO ---
+        $('#btnNuevoAlumno').click(function() {
+            $('#frmCrudAlumno')[0].reset();
+            $('#accionCrud').val('crear');
+            $('input[name="boleta"]').prop('readonly', false);
+            $('#nombreEscuela').prop('disabled', true); 
+            
+            $('#seccionCuenta').show();
+            $('#correo, #contrasena').prop('required', true);
+            
+            $('.modal-title').html('<i class="bi bi-person-plus me-2"></i>Registrar Nuevo Alumno');
+
+            // Limpiamos horarios y disparamos la carga de laboratorios libres
+            $('#horario').html('<option value="" disabled selected>Esperando laboratorio...</option>');
+            cargarLaboratorios(''); 
+        });
+
+        // --- 4. BOTÓN EDITAR ---
+        $(document).on('click', '.btn-editar', function() {
+            let boleta = $(this).data('boleta');
+            
+            $('#frmCrudAlumno')[0].reset();
+            $('#accionCrud').val('editar');
+            $('input[name="boleta"]').prop('readonly', true);
+            
+            $('#seccionCuenta').hide();
+            $('#correo, #contrasena').prop('required', false).val('');
+            
+            $('.modal-title').html('<i class="bi bi-pencil-square me-2"></i>Actualizar Expediente Completo');
+
+            $.ajax({
+                url: '../docs/php/crud_obtener.php',
+                type: 'POST',
+                data: { boleta: boleta },
+                dataType: 'json', 
+                success: function(datos) {
+                    if(!datos.error) {
+                        $('input[name="boleta"]').val(datos.boleta);
+                        $('input[name="nombre"]').val(datos.nombre);
+                        $('input[name="pat"]').val(datos.pat);
+                        $('input[name="mat"]').val(datos.mat);
+                        $('input[name="curp"]').val(datos.curp);
+                        $('input[name="tel"]').val(datos.tel);
+                        $('input[name="fecha_nac"]').val(datos.fecha_nac);
+                        $('select[name="genero"]').val(datos.gen);
+                        $('select[name="ent_pro"]').val(datos.ent_pro);
+                        $('input[name="prom"]').val(datos.prom);
+                        
+                        if ($('#escuelaProcedencia option[value="' + datos.esc_pro + '"]').length > 0) {
+                            $('#escuelaProcedencia').val(datos.esc_pro);
+                            $('#nombreEscuela').prop('disabled', true).val('');
+                        } else {
+                            $('#escuelaProcedencia').val('Otro');
+                            $('#nombreEscuela').prop('disabled', false).val(datos.esc_pro);
+                        }
+
+                        // Disparamos la carga de laboratorios y horarios respetando el cupo del propio alumno
+                        cargarLaboratorios(datos.boleta, datos.id_lab);
+                        cargarHorarios(datos.id_lab, datos.boleta, datos.id_horario);
+
+                    } else {
+                        alert(datos.error);
+                    }
+                }
+            });
+        });
+
+        // 5 DELETE: Botón de eliminar en la tabla
         $(document).on('click', '.btn-eliminar', function() {
             let boleta = $(this).data('boleta');
             
@@ -510,7 +534,7 @@ $(document).on('click', '.btn-editar', function() {
             }
         });
 
-        // 5. CREATE / UPDATE: Botón de Guardar en el Modal
+        // 6. CREATE / UPDATE: Botón de Guardar en el Modal
     $('#frmCrudAlumno').submit(function(e) {
     e.preventDefault();
     
