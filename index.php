@@ -113,9 +113,9 @@
                                     </li>
                                 <?php else: ?>
                                     <?php if ($rol == "1"): ?>
-                                        <li class="nav-item"><a class="nav-link" href="admin/">Panel Admin</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="admin/"><i class="bi bi-database-lock"></i>Panel Admin</a></li>
                                     <?php else: ?>
-                                        <li class="nav-item"><a class="nav-link" href="alumno/">Mi Cuenta</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="alumno/"><i class="bi bi-person"></i>Mi Cuenta</a></li>
                                     <?php endif; ?>
                                     
                                     <li class="nav-item">
