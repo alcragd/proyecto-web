@@ -91,15 +91,76 @@
         <div class="row justify-content-center">
             <div class="col-12 col-xl-12">
                 
+                <!-- Sección de Estadísticas -->
+                <div class="row g-3 mb-5">
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <div class="card text-center border-0 shadow-sm h-100" style="border-top: 4px solid var(--ipn-guinda);">
+                            <div class="card-body">
+                                <i class="bi bi-people-fill" style="font-size: 2rem; color: var(--ipn-guinda);"></i>
+                                <h6 class="card-title text-muted mt-3 mb-2">Total de Alumnos</h6>
+                                <h3 class="fw-bold text-guinda" id="estadisticaTotal">0</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <div class="card text-center border-0 shadow-sm h-100" style="border-top: 4px solid #17a2b8;">
+                            <div class="card-body">
+                                <i class="bi bi-building" style="font-size: 2rem; color: #17a2b8;"></i>
+                                <h6 class="card-title text-muted mt-3 mb-2">Laboratorios</h6>
+                                <h3 class="fw-bold" style="color: #17a2b8;" id="estadisticaLabs">0</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <div class="card text-center border-0 shadow-sm h-100" style="border-top: 4px solid #28a745;">
+                            <div class="card-body">
+                                <i class="bi bi-clock-fill" style="font-size: 2rem; color: #28a745;"></i>
+                                <h6 class="card-title text-muted mt-3 mb-2">Horarios</h6>
+                                <h3 class="fw-bold" style="color: #28a745;" id="estadisticaHorarios">0</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-3">
+                        <button class="btn btn-sm btn-outline-primary w-100 h-100" data-bs-toggle="modal" data-bs-target="#modalDetalleEstadisticas" style="border: 2px dashed #6c757d; padding: 2rem 0;">
+                            <i class="bi bi-bar-chart me-2"></i>Ver detalles
+                        </button>
+                    </div>
+                </div>
+                
                 <div class="card mb-4 shadow-sm border-0" style="border-top: 4px solid var(--ipn-guinda) !important;">
                     <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center flex-wrap gap-2">
-                        <h4 class="mb-0 text-guinda fw-bold"><i class="bi bi-sliders me-2"></i>Consola Administrativa (Operaciones CRUD)</h4>
+                        <h4 class="mb-0 text-guinda fw-bold"><i class="bi bi-sliders me-2"></i>Consola Administrativa</h4>
                         <button class="btn btn-institucional btn-sm shadow-sm text-uppercase fw-bold" id="btnNuevoAlumno" data-bs-toggle="modal" data-bs-target="#modalCrudAlumno" style="background-color: var(--ipn-guinda); color: white;">
                             <i class="bi bi-plus-circle me-1"></i> Registrar Alumno
                         </button>
                     </div>
                     
                     <div class="card-body p-4">
+                        <!-- Barra de búsqueda y filtros -->
+                        <div class="row g-3 mb-4 pb-3 border-bottom">
+                            <div class="col-12 col-md-6">
+                                <label for="inputBuscar" class="form-label fw-semibold text-muted"><i class="bi bi-search me-1"></i>Buscar</label>
+                                <input type="text" class="form-control" id="inputBuscar" placeholder="Boleta, nombre o escuela...">
+                            </div>
+                            <div class="col-12 col-md-3">
+                                <label for="filtroLaboratorio" class="form-label fw-semibold text-muted"><i class="bi bi-building me-1"></i>Laboratorio</label>
+                                <select class="form-select" id="filtroLaboratorio">
+                                    <option value="">Todos los laboratorios</option>
+                                </select>
+                            </div>
+                            <div class="col-12 col-md-3">
+                                <label for="filtroHorario" class="form-label fw-semibold text-muted"><i class="bi bi-clock me-1"></i>Horario</label>
+                                <select class="form-select" id="filtroHorario">
+                                    <option value="">Todos los horarios</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <small class="text-muted">Mostrando <span id="conteoResultados">0</span> registro(s)</small>
+                            <button class="btn btn-sm btn-outline-secondary" id="btnLimpiarFiltros">
+                                <i class="bi bi-arrow-clockwise me-1"></i>Limpiar filtros
+                            </button>
+                        </div>
                         <div class="table-responsive">
                             <table class="table table-hover table-bordered align-middle text-center">
                                 <thead style="background-color: var(--ipn-guinda); color: white;">
@@ -124,6 +185,26 @@
             </div>
         </div>
     </main>
+    <!-- Modal de Detalles de Estadísticas -->
+    <!-- Modal de Detalles de Estadísticas -->
+    <div class="modal fade" id="modalDetalleEstadisticas" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content border-0 shadow">
+                <div class="modal-header" style="background-color: var(--ipn-guinda); color: white;">
+                    <h5 class="modal-title fw-bold"><i class="bi bi-bar-chart me-2"></i>Detalles de Estadísticas</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <h6 class="fw-bold text-guinda mb-3"><i class="bi bi-grid-3x3 me-2"></i>Alumnos por Laboratorio y Horario</h6>
+                    <div id="detallesLaboratoriosHorarios" class="list-group list-group-flush">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="modal fade" id="modalCrudAlumno" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -174,7 +255,6 @@
                 <label for="genero" class="form-label fw-semibold text-muted">Género</label>
                 <select class="form-select" name="genero" id="genero" required>
                     <option value="" disabled selected>Selecciona...</option>
-                    <option value="S/A">Sin Asignar (S/A)</option>
                     <option value="Masculino">Masculino</option>
                     <option value="Femenino">Femenino</option>
                     <option value="Otro">Otro</option>
@@ -385,6 +465,9 @@
 
     <script>
     $(document).ready(function() {
+        let datosTablaCompleta = []; // Almacenar datos completos para filtrado
+        let laboratoriosUnicos = new Set(); // Laboratorios únicos para el select
+        let horariosUnicos = new Set(); // Horarios únicos para el select
         
         // 1. READ: Cargar la tabla al entrar a la página
         function cargarTabla() {
@@ -393,9 +476,186 @@
                 type: 'GET',
                 success: function(respuesta) {
                     $('#tbodyAlumnos').html(respuesta);
+                    extraerDatosDeTabla();
+                    llenarSelectsFiltros();
+                    aplicarFiltros();
+                    actualizarEstadisticas();
                 }
             });
         }
+        
+        // Función para actualizar estadísticas
+        function actualizarEstadisticas() {
+            // Total de alumnos
+            const totalAlumnos = datosTablaCompleta.length;
+            $('#estadisticaTotal').text(totalAlumnos);
+            
+            // Cantidad de laboratorios únicos
+            const cantLabs = laboratoriosUnicos.size;
+            $('#estadisticaLabs').text(cantLabs);
+            
+            // Cantidad de horarios únicos
+            const cantHorarios = horariosUnicos.size;
+            $('#estadisticaHorarios').text(cantHorarios);
+            
+            // Llenar detalles en el modal
+            llenarDetallesEstadisticas();
+        }
+        
+        // Función para llenar los detalles en el modal
+        function llenarDetallesEstadisticas() {
+            const capacidadMax = 30; // Capacidad máxima de cada laboratorio-horario
+            
+            // Crear una estructura agrupada: laboratorio -> horarios con conteos
+            const labAgrupados = {};
+            
+            datosTablaCompleta.forEach(fila => {
+                if(fila.laboratorio && fila.horario) {
+                    if(!labAgrupados[fila.laboratorio]) {
+                        labAgrupados[fila.laboratorio] = {};
+                    }
+                    labAgrupados[fila.laboratorio][fila.horario] = (labAgrupados[fila.laboratorio][fila.horario] || 0) + 1;
+                }
+            });
+            
+            // Renderizar agrupado por laboratorio
+            let htmlCombinaciones = '';
+            
+            if(Object.keys(labAgrupados).length > 0) {
+                Object.keys(labAgrupados).sort().forEach(laboratorio => {
+                    const horarios = labAgrupados[laboratorio];
+                    let htmlHorarios = '';
+                    
+                    Object.keys(horarios).sort().forEach(horario => {
+                        const cant = horarios[horario];
+                        const porcentaje = ((cant / capacidadMax) * 100).toFixed(1);
+                        const ocupacion = cant >= capacidadMax ? 'bg-danger' : cant >= 24 ? 'bg-warning' : 'bg-primary';
+                        
+                        htmlHorarios += `
+                            <div class="ps-3 pb-2">
+                                <small class="text-muted d-flex justify-content-between align-items-center">
+                                    <span><i class="bi bi-clock-history me-1"></i>${horario}</span>
+                                    <span class="badge ${ocupacion}">${cant}/30 alumnos${cant !== 1 ? 's' : ''} (${porcentaje}%)</span>
+                                </small>
+                            </div>
+                        `;
+                    });
+                    
+                    htmlCombinaciones += `
+                        <div class="list-group-item py-3">
+                            <div class="fw-bold text-guinda mb-3"><i class="bi bi-building me-1"></i>${laboratorio}</div>
+                            ${htmlHorarios}
+                        </div>
+                    `;
+                });
+            } else {
+                htmlCombinaciones = '<div class="list-group-item text-center text-muted py-4">Sin datos disponibles</div>';
+            }
+            
+            $('#detallesLaboratoriosHorarios').html(htmlCombinaciones);
+        }
+        
+        // Función para extraer datos de las filas de la tabla
+        function extraerDatosDeTabla() {
+            datosTablaCompleta = [];
+            laboratoriosUnicos.clear();
+            horariosUnicos.clear();
+            
+            $('#tbodyAlumnos tr').each(function() {
+                const celdas = $(this).find('td');
+                const fila = {
+                    boleta: celdas.eq(0).text().trim(),
+                    nombre: celdas.eq(1).text().trim(),
+                    escuela: celdas.eq(2).text().trim(),
+                    promedio: celdas.eq(3).text().trim(),
+                    laboratorio: celdas.eq(4).text().trim(),
+                    horario: celdas.eq(5).text().trim(),
+                    html: $(this).html()
+                };
+                datosTablaCompleta.push(fila);
+                laboratoriosUnicos.add(fila.laboratorio);
+                horariosUnicos.add(fila.horario);
+            });
+        }
+        
+        // Función para llenar los selects de filtro con valores únicos
+        function llenarSelectsFiltros() {
+            const laboratorios = Array.from(laboratoriosUnicos).sort();
+            const horarios = Array.from(horariosUnicos).sort();
+            
+            const selectLab = $('#filtroLaboratorio');
+            const selectHor = $('#filtroHorario');
+            
+            // Guardar opción inicial
+            const valorLab = selectLab.val();
+            const valorHor = selectHor.val();
+            
+            // Limpiar opciones excepto la primera
+            selectLab.find('option:not(:first)').remove();
+            selectHor.find('option:not(:first)').remove();
+            
+            // Agregar opciones
+            laboratorios.forEach(lab => {
+                if(lab) selectLab.append(`<option value="${lab}">${lab}</option>`);
+            });
+            horarios.forEach(hor => {
+                if(hor) selectHor.append(`<option value="${hor}">${hor}</option>`);
+            });
+            
+            // Restaurar valores si existe
+            selectLab.val(valorLab);
+            selectHor.val(valorHor);
+        }
+        
+        // Función para aplicar filtros
+        function aplicarFiltros() {
+            const textoBusqueda = $('#inputBuscar').val().toLowerCase();
+            const laboratorioFiltro = $('#filtroLaboratorio').val();
+            const horarioFiltro = $('#filtroHorario').val();
+            
+            let filasVisibles = 0;
+            let htmlFilasVisibles = '';
+            
+            datosTablaCompleta.forEach((fila, index) => {
+                const cumpleBusqueda = !textoBusqueda || 
+                    fila.boleta.toLowerCase().includes(textoBusqueda) ||
+                    fila.nombre.toLowerCase().includes(textoBusqueda) ||
+                    fila.escuela.toLowerCase().includes(textoBusqueda);
+                
+                const cumpleLaboratorio = !laboratorioFiltro || fila.laboratorio === laboratorioFiltro;
+                const cumpleHorario = !horarioFiltro || fila.horario === horarioFiltro;
+                
+                const debeVisualizar = cumpleBusqueda && cumpleLaboratorio && cumpleHorario;
+                
+                if(debeVisualizar) {
+                    htmlFilasVisibles += '<tr>' + fila.html + '</tr>';
+                    filasVisibles++;
+                }
+            });
+            
+            $('#conteoResultados').text(filasVisibles);
+            
+            // Mostrar mensaje si no hay resultados o reconstruir tabla
+            if(filasVisibles === 0 && datosTablaCompleta.length > 0) {
+                $('#tbodyAlumnos').html(`<tr id="mensajeNoResultados"><td colspan="7" class="text-center text-muted py-4"><i class="bi bi-search me-2"></i>No se encontraron resultados que coincidan con los filtros.</td></tr>`);
+            } else {
+                $('#tbodyAlumnos').html(htmlFilasVisibles);
+            }
+        }
+        
+        // Eventos de los filtros
+        $('#inputBuscar').on('keyup', aplicarFiltros);
+        $('#filtroLaboratorio').on('change', aplicarFiltros);
+        $('#filtroHorario').on('change', aplicarFiltros);
+        
+        // Botón limpiar filtros
+        $('#btnLimpiarFiltros').on('click', function() {
+            $('#inputBuscar').val('');
+            $('#filtroLaboratorio').val('');
+            $('#filtroHorario').val('');
+            aplicarFiltros();
+        });
+        
         cargarTabla(); // Ejecutamos la función apenas cargue la página
 
 // --- Combos Dinamicos
@@ -525,7 +785,7 @@
                     success: function(respuesta) {
                         if(respuesta.trim() === "success") {
                             alert('Registro eliminado correctamente.');
-                            cargarTabla();
+                            cargarTabla(); // Recarga los datos y aplica filtros
                         } else {
                             alert(respuesta);
                         }
@@ -562,7 +822,7 @@
             if(respuesta.trim() === "success") {
                 alert('Operación realizada con éxito en la base de datos.');
                 $('#modalCrudAlumno').modal('hide');
-                cargarTabla();
+                cargarTabla(); // Recarga los datos y aplica filtros
             } else {
                 alert(respuesta);
             }

@@ -55,7 +55,9 @@ function validarFechaNacimiento(){
 }
 
 function validarCurp(){
-    return regexCurp.test($('#curp').val().trim());
+    const curpInput = $('#curp');
+    const curpValue = curpInput.val().trim().toUpperCase();
+    return regexCurp.test(curpValue);
 }
 
 
@@ -163,3 +165,10 @@ function validarFormularioLogin(){
     console.log('validación OK');
     return true;
 }
+
+// Event listener para convertir CURP a mayúsculas en tiempo real
+$(document).ready(function() {
+    $('#curp').on('input', function() {
+        $(this).val($(this).val().toUpperCase());
+    });
+});

@@ -2,7 +2,7 @@
 // Incluimos tu archivo de conexión original
 require_once("connection.php");
 
-/
+
 $correo_admin = "admin@ipn.mx"; 
 $contrasena_plana = "Admin_123"; 
 $rol_admin = 1; 
@@ -24,7 +24,6 @@ if ($stmt) {
         echo "<h3 style='color: #750946;'>¡Cuenta de Administrador creada con éxito!</h3>";
         echo "<strong>Usuario/Correo:</strong> " . htmlspecialchars($correo_admin) . "<br>";
         echo "<strong>Contraseña en texto plano:</strong> " . htmlspecialchars($contrasena_plana) . "<br><br>";
-        echo "<p style='color: #d9534f; font-size: 0.9em; font-weight: bold;'>* ¡IMPORTANTE! Por seguridad de tu proyecto, elimina este archivo de tu servidor local una vez que hayas verificado el registro en phpMyAdmin.</p>";
         echo "</div>";
     } else {
         echo "Error al registrar el administrador (es probable que el correo electrónico ya esté registrado): " . mysqli_stmt_error($stmt);

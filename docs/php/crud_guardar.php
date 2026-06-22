@@ -7,7 +7,7 @@ $boleta = $_POST['boleta'] ?? '';
 $nombre = $_POST['nombre'] ?? '';
 $pat = $_POST['pat'] ?? '';
 $mat = $_POST['mat'] ?? '';
-$curp = $_POST['curp'] ?? '';
+$curp = strtoupper($_POST['curp'] ?? '');
 $tel = $_POST['tel'] ?? '';
 $fecha_nac = $_POST['fecha_nac'] ?? '';
 $gen = $_POST['genero'] ?? '';
@@ -73,7 +73,7 @@ if($accion === 'editar') {
     }
     mysqli_stmt_close($stmtVerificar);
     
-    // --- NUEVA VALIDACIÓN: PREVENIR CORREOS DUPLICADOS ---
+    // ---  PREVENIR CORREOS DUPLICADOS ---
     $stmtVerificarCorreo = mysqli_prepare($conexion, "SELECT correo FROM usuarios WHERE correo = ?");
     mysqli_stmt_bind_param($stmtVerificarCorreo, "s", $correo);
     mysqli_stmt_execute($stmtVerificarCorreo);
