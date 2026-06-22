@@ -129,7 +129,7 @@
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content border-0 shadow">
                 <div class="modal-header" style="background-color: var(--ipn-guinda); color: white;">
-                    <h5 class="modal-title fw-bold"><i class="bi bi-person-gear me-2"></i>Actualizar / Crear Registro de Alumno</h5>
+                    <h5 class="modal-title fw-bold text-white"><i class="bi bi-person-gear me-2"></i>Actualizar / Crear Registro de Alumno</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <form id="frmCrudAlumno">
