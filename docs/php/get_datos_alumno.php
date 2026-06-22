@@ -9,7 +9,6 @@
 
     $boleta = $_SESSION["boleta"];
 
-    // Nueva consulta: Unimos la tabla de alumnos para obtener el nombre
     $sql = "SELECT a.nombre, a.pat, a.mat, l.nombre AS lab_nombre, h.hora_ini, h.hora_fin 
             FROM alumnos a
             LEFT JOIN asignacion_examen ae ON a.boleta = ae.boleta
@@ -24,10 +23,8 @@
     $datos = mysqli_fetch_assoc($res);
 
     if($datos) {
-        // Concatenar nombre completo
         $nombreCompleto = htmlspecialchars($datos['nombre'] . ' ' . $datos['pat'] . ' ' . $datos['mat']);
         
-        // --- AQUÍ IMPRIMES EL NOMBRE ---
         echo '
             <div class="col-12 col-md-6 mb-3">
                 <div class="ticket-label">Aspirante</div>
@@ -39,7 +36,6 @@
             </div>
         ';
 
-        // --- AQUÍ IMPRIMES EL LABORATORIO Y HORARIO ---
         if($datos['lab_nombre']) {
             echo '
                 <div class="col-12 col-md-6 mt-2">

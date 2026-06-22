@@ -9,7 +9,7 @@ $query = "SELECT a.boleta, a.nombre, a.pat, a.mat, a.esc_pro, a.prom, l.nombre a
 $result = mysqli_query($conexion, $query);
 
 while($row = mysqli_fetch_assoc($result)) {
-    // Si el administrador registró desde el panel, evitamos que diga "S/A S/A"
+    
     $apellidos = ($row['pat'] == 'S/A') ? "" : " " . $row['pat'] . " " . $row['mat'];
     $nombreCompleto = trim($row['nombre'] . $apellidos);
     

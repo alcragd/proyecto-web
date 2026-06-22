@@ -3,17 +3,13 @@ session_start();
 
 require_once("connection.php");
 
-/* ======================
-   VALIDAR CAPTCHA PRIMERO
-   ====================== */
-
 $secretKey = "6LeeNyktAAAAAOOphIqMJeqVKh1C9_QXMTSpx5Hw";
 
 $captcha = $_POST['g-recaptcha-response'] ?? '';
 
 if(empty($captcha)){
     echo "Error: Por favor completa el Captcha.";
-    exit; // Usamos exit para detener el script aquí
+    exit;
 }
 
 $url = "https://www.google.com/recaptcha/api/siteverify";
@@ -43,15 +39,11 @@ if(!$verify->success){
     exit;
 }
 
-/* ======================
-   LOGIN
-   ====================== */
 
 $correo = $_POST["correo"];
 $contra = $_POST["contrasena"];
 
 
-/* Consulta segura */
 $stmt = mysqli_prepare(
     $conexion,
     "SELECT *

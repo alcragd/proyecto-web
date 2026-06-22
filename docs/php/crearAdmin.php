@@ -1,5 +1,4 @@
 <?php
-// Incluimos tu archivo de conexión original
 require_once("connection.php");
 
 
@@ -10,15 +9,12 @@ $rol_admin = 1;
 
 $contrasena_hasheada = password_hash($contrasena_plana, PASSWORD_DEFAULT);
 
-// 3. Preparamos la consulta segura para insertar los datos en tu tabla 'usuarios'
 $query = "INSERT INTO usuarios (correo, password, rol) VALUES (?, ?, ?)";
 $stmt = mysqli_prepare($conexion, $query);
 
 if ($stmt) {
-    // Vinculamos los parámetros: 's' (string) para correo, 's' (string) para el hash, 'i' (integer) para el rol
     mysqli_stmt_bind_param($stmt, "ssi", $correo_admin, $contrasena_hasheada, $rol_admin);
     
-    // Ejecutamos la transacción en la base de datos
     if (mysqli_stmt_execute($stmt)) {
         echo "<div style='font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ddd; border-radius: 5px; max-width: 500px; margin: 20px auto; background-color: #f9f9f9;'>";
         echo "<h3 style='color: #750946;'>¡Cuenta de Administrador creada con éxito!</h3>";

@@ -4,12 +4,9 @@ require_once('connection.php');
 
 class PDF extends FPDF {
     function Header() {
-        if(file_exists('../img/logo-ipn-guinda.png')) {
-            $this->Image('../img/logo-ipn-guinda.png', 10, 8, 25); 
-        }
-        if(file_exists('../img/logoEscom.png')) {
-            $this->Image('../img/logoEscom.png', 168, 13, 35); 
-        }
+
+        $this->Image('../img/logo-ipn-guinda.png', 10, 8, 25); 
+        $this->Image('../img/logoEscom.png', 168, 13, 35); 
         
         $this->SetFont('times', 'B', 16);
         $this->SetTextColor(91,18,55);
@@ -70,7 +67,7 @@ $pdf->AddPage();
 
 $pdf->AliasNBPages();
 
-// --- DATOS DEL ALUMNO ---
+
 $pdf->SetFont('Arial', '', 12);
 function imprimirFila($pdf, $etiqueta, $valor) {
     $pdf->SetFont('Arial', 'B', 12);
@@ -93,22 +90,22 @@ imprimirFila($pdf, 'Promedio:', $datos['prom']);
 
 $pdf->Ln(20);
 
-// --- DATOS DE ASIGNACIÓN ---
+
 $pdf->SetTextColor(52,50,84);
 $pdf->SetFont('times', 'B', 14);
 $pdf->Cell(0, 10, utf8_decode('Detalles de tu Examen:'), 0, 1, 'L');
 
-// Definir colores y fuente para la tabla
+
 $pdf->SetFillColor(220, 220, 220); 
 $pdf->SetTextColor(0, 0, 0);       
 $pdf->SetFont('Arial', 'B', 12);
 $pdf->Ln(5); 
 
-// Encabezados de la tabla
+
 $pdf->Cell(95, 10, utf8_decode('Laboratorio'), 1, 0, 'C', true);
 $pdf->Cell(95, 10, utf8_decode('Horario'), 1, 1, 'C', true);
 
-// Contenido de la tabla
+
 $pdf->SetFont('Arial', '', 12);
 $pdf->SetTextColor(91,18,55);
 $pdf->Cell(95, 10, utf8_decode($datos['laboratorio']), 1, 0, 'C');
