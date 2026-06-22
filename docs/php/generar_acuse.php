@@ -96,7 +96,7 @@ $pdf->Ln(20);
 // --- DATOS DE ASIGNACIÓN ---
 $pdf->SetTextColor(52,50,84);
 $pdf->SetFont('times', 'B', 14);
-$pdf->Cell(0, 10, utf8_decode('Detalles de tu Examen Diagnóstico:'), 0, 1, 'L');
+$pdf->Cell(0, 10, utf8_decode('Detalles de tu Examen:'), 0, 1, 'L');
 
 // Definir colores y fuente para la tabla
 $pdf->SetFillColor(220, 220, 220); 

@@ -102,7 +102,7 @@ $(document).ready(function () {
 
 	const anioActual = new Date().getFullYear();
     
-    const anioMax = anioActual - 17;
+    const anioMax = anioActual - 16;
     
     const anioMin = anioActual - 100;
 

@@ -130,7 +130,7 @@ try{
     $resultCupos = mysqli_query($conexion, $queryCupos);
 
     if(mysqli_num_rows($resultCupos) === 0){
-        // Excepción personalizada si ya se llenaron todos los laboratorios en todos los horarios
+        // ya se llenaron todos los laboratorios en todos los horarios
         throw new Exception("Ya no hay cupos disponibles para realizar el examen.", 9999);
     }
 
